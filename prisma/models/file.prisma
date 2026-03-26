@@ -1,0 +1,72 @@
+enum FileStatus {
+    // --- 初始與上傳階段 ---
+    UPLOADING // 上傳中 (預留空間，前端顯示進度)
+    PENDING // 已上傳，等待系統掃描或初步處理
+
+    // --- 正常與使用中 ---
+    AVAILABLE // 可正常使用 (這是最常見的狀態)
+    IN_USE // 被占用/使用中 (例如：檔案已被某個流程鎖定，暫時不可刪除或修改)
+
+    // --- 處理與掃描 (耗時操作) ---
+    PROCESSING // 處理中 (例如：轉檔、縮圖生成、加密)
+    SCANNING // 安全掃描中 (掃毒或敏感詞審核)
+
+    // --- 限制與異常 ---
+    LOCKED // 已鎖定 (由管理員手動鎖定，或因為欠費、違規被停用)
+    FAILED // 處理失敗 (例如轉檔失敗、上傳中斷)
+    REJECTED // 審核不通過 (安全風險或內容不合規)
+
+    // --- 結束階段 ---
+    ARCHIVED // 已封存 (檔案還在，但不在常用列表顯示，通常存於冷存儲)
+    DELETED // 已刪除 (軟刪除，記錄還在但無法存取)
+}
+
+//
+model File {
+    id           String     @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    originalName String?    @map("original_name")
+    systemName   String?    @map("system_name")
+    physicalPath String?    @map("physical_path")
+    size         BigInt?
+    checksum     String?
+    isOriginal   Boolean    @default(false) @map("is_original")
+    metadata     Json?
+    status       FileStatus
+
+    createdTime     DateTime  @default(now()) @map("created_time")
+    modifiedTime    DateTime  @updatedAt @map("modified_time")
+    lastScannedTime DateTime? @map("last_scanned_time")
+
+    fileExtensionId Int           @map("file_extension_id")
+    fileExtension   FileExtension @relation(fields: [fileExtensionId], references: [id])
+
+    @@map("file")
+}
+
+//
+model FileCategory {
+    id          Int     @id @default(autoincrement())
+    code        String  @unique // 例如: "IMAGE", "VIDEO", "DOC", "ARCHIVE"
+    name        String // 例如: "圖片", "影片", "文件", "壓縮檔"
+    description String?
+
+    extensions FileExtension[] // 一個分類下有多個副檔名
+
+    @@map("file_category")
+}
+
+//
+model FileExtension {
+    id          Int     @id @default(autoincrement())
+    code        String  @unique // 例如: "jpg", "png", "pdf", "docx"
+    mimeType    String? // 例如: "image/jpeg"
+    name        String?
+    description String?
+
+    categoryId Int          @map("file_category_id")
+    category   FileCategory @relation(fields: [categoryId], references: [id])
+
+    files File[]
+
+    @@map("file_extension")
+}

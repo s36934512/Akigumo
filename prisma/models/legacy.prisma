@@ -1,0 +1,10 @@
+// 資料庫快取，儲存 key-value 快取資料
+// model DatabaseCache {
+//     namespace String
+//     key       String
+//     value     Json?
+//     version   Int    @default(0)
+
+//     @@id([namespace, key])
+//     @@map("database_cache")
+// }

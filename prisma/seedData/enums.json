@@ -1,0 +1,66 @@
+{
+    "FileSubType": [
+        {
+            "code": "image",
+            "name": "圖片"
+        },
+        {
+            "code": "video",
+            "name": "影片"
+        },
+        {
+            "code": "audio",
+            "name": "音訊"
+        },
+        {
+            "code": "archive",
+            "name": "壓縮檔"
+        },
+        {
+            "code": "document",
+            "name": "文件"
+        },
+        {
+            "code": "other",
+            "name": "其他"
+        }
+    ],
+    "language": [
+        {
+            "code": "en-US",
+            "name": "English (US)"
+        },
+        {
+            "code": "zh-Hant-TW",
+            "name": "繁體中文 (台灣)"
+        },
+        {
+            "code": "zh-Hans-CN",
+            "name": "简体中文 (中國)"
+        },
+        {
+            "code": "ja-JP",
+            "name": "日本語"
+        },
+        {
+            "code": "fr-FR",
+            "name": "Français (France)"
+        },
+        {
+            "code": "de-DE",
+            "name": "Deutsch (Deutschland)"
+        },
+        {
+            "code": "es-ES",
+            "name": "Español (España)"
+        },
+        {
+            "code": "ko-KR",
+            "name": "한국어 (대한민국)"
+        },
+        {
+            "code": "it-IT",
+            "name": "Italiano (Italia)"
+        }
+    ]
+}

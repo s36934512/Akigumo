@@ -1,0 +1,34 @@
+@let cols = (communicationService.gridCols$ | async);
+
+<div class="flex items-center gap-4">
+    <p-button label="收藏" icon="pi pi-star"></p-button>
+    <p-button label="編輯" icon="pi pi-pencil"></p-button>
+    <p-button label="下載" icon="pi pi-download"></p-button>
+
+    <div class="flex">
+        <p-button icon="pi pi-minus" (click)="communicationService.decreaseGridCols();"
+            [disabled]="cols == null || cols <= 2" [style.opacity]="cols == null || cols <= 2 ? '0.2' : '1'" />
+
+        <div class="px-3 flex flex-col items-center">
+            <span class="text-[9px] font-black text-cyan-400 uppercase tracking-tighter">Density</span>
+            <span class="text-[12px] font-mono font-bold ">{{ cols }}</span>
+        </div>
+
+        <p-button icon="pi pi-plus" (click)="communicationService.incrementGridCols();"
+            [disabled]="cols == null || cols >= 8" [style.opacity]="cols == null ||cols >= 8 ? '0.2' : '1'" />
+    </div>
+
+    <button (click)="communicationService.toggleSort()"
+        class="flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all active:scale-95 group relative overflow-hidden">
+        <div class="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
+
+        <i class="pi {{ (communicationService.sortIcon$ | async) }}"></i>
+
+        <div class="flex flex-col items-start leading-none">
+            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Sorting</span>
+            <span class="text-sm font-semibold tracking-wide">{{ (communicationService.sortLabel$ | async) }}</span>
+        </div>
+    </button>
+
+</div>

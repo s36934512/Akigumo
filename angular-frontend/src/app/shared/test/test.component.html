@@ -1,0 +1,9 @@
+<div [id]="comic.comic_id" class="fixed flex flex-col z-100 shadow p-2 bg-white rounded-lg max-h-[100vh] inline-block">
+
+    <div class="flex flex-col max-h-[100vh] overflow-hidden">
+        <div>{{comic.title}}</div>
+        <img [src]="comic.imageFiles[this.previewPage]" class="object-contain flex-1 max-h-full" alt="preview" />
+        <div>{{previewPage + 1}} / {{comic.page_count}}</div>
+    </div>
+
+</div>

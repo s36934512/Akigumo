@@ -1,0 +1,14 @@
+@let isCollapsed = layoutDataService.isSidebarCollapsed$ | async;
+@let theme = layoutDataService.theme;
+
+<div class="h-16 flex items-center px-6 overflow-hidden shrink-0 border-b"
+    [style.borderBottomColor]="'rgba(255,255,255,0.05)'" [class.justify-center]="isCollapsed">
+    <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" [style.backgroundColor]="theme.primary">
+        <span class="material-icons text-white text-sm">anchor</span>
+    </div>
+    @if (!isCollapsed) {
+    <span class="ml-3 font-black tracking-widest text-sm italic">
+        <span [style.color]="theme.coral">秋雲</span>先生取材中
+    </span>
+    }
+</div>

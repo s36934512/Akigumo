@@ -1,0 +1,22 @@
+type: object
+required:
+  - id
+  - title
+  - price
+properties:
+  id:
+    type: string
+  title:
+    type: string
+    example: "專業機械鍵盤"
+  price:
+    type: number
+    example: 2500
+  thumbnail:
+    type: string
+    format: uri
+    description: 列表顯示用的縮圖
+  isLoaded:
+    type: boolean
+    default: true
+    description: 用於前端標記資料是否已就緒

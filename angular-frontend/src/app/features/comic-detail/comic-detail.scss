@@ -1,0 +1,11 @@
+// 參考 comic-upload 樣式，讓圖片不會太大
+
+.comic-detail-container {
+    margin: 2em auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px #0001, 0 1.5px 6px #0001;
+    padding: 2.5em 2em 2em 2em;
+    font-family: 'Segoe UI', 'Noto Sans TC', Arial, sans-serif;
+    position: relative;
+}

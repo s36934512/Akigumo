@@ -1,0 +1,23 @@
+<div class="file-manager">
+    <h1>檔案管理</h1>
+    <div *ngIf="loading">載入中...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <table *ngIf="!loading && files.length">
+        <thead>
+            <tr>
+                <th>名稱</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let file of files">
+                <td>{{ file.name }}</td>
+                <td>
+                    <button (click)="download(file.name)">下載</button>
+                    <button (click)="delete(file.name)">刪除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!loading && !files.length">目前沒有檔案。</div>
+</div>

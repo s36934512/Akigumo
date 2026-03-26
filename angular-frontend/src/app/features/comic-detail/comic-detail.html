@@ -1,0 +1,174 @@
+@let comic = communicationService.comicFile$ | async;
+@let info = comic?.editInfo;
+
+<app-layout>
+    <div class="w-full mx-auto rounded-2xl shadow-lg p-6 relative bg-[#FFFFFF]"
+        style="font-family: 'Segoe UI', 'Noto Sans TC', Arial, sans-serif;">
+        <div *ngIf="loading">載入中...</div>
+        <div *ngIf="error" class="error">{{error}}</div>
+        <div *ngIf="!loading && !error && comic">
+            <!-- 編輯/檢視模式切換按鈕 -->
+            <!-- <p-button (onClick)="enableEdit()" label="編輯" icon="pi pi-pencil" styleClass="mr-2 mb-2"></p-button> -->
+
+
+            <!-- 檢視模式 -->
+            <!-- <ng-container>
+                <h2>{{ info?.title }}</h2>
+                <div class="cover-info-row">
+                    <div class="cover">
+                        @if(comic.coverUrl) {
+                        <img [src]="'/api/thumbnail?src=' + encodeUrl(comic.coverUrl) + '&width=360&height=480'"
+                            alt="封面" width="180" height="240" />
+                        } @else {
+                        <span>無封面</span>
+                        }
+                    </div>
+                    <div class="info">
+                        <div>作者：{{ info?.author }}</div>
+                        <div>社團/出版社：{{ info?.group }}</div>
+                        <div>類型：{{ info?.type }}</div>
+                        <div>語言：{{ info?.language }}</div>
+                        <div>原作：{{ info?.series }}</div>
+                        <div>年齡分級：{{ info?.category }}</div>
+                        <div>角色：{{ info?.characters }}</div>
+                        <div class="tags">標籤：{{ info?.tags }}</div>
+                        <div>AI 生成：{{ info?.ai_generated ? '是' : '否' }}</div>
+                        <div class="pages">頁數：{{ comic.pages.length }}</div>
+                        <div class="description">{{ info?.description }}</div>
+                    </div>
+                </div>
+            </ng-container> -->
+
+            <div class="max-w-4xl w-full bg-[#FFFFFF] rounded-2xl shadow-xl overflow-hidden border border-[#606063]/10">
+
+                <!-- 標題區域 -->
+                <div class="bg-[#606063] p-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#FFFFFF] leading-tight">
+                        {{ info?.title || '載入中...' }}
+                    </h2>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 p-6 md:p-8">
+
+                    <!-- 封面圖區域 -->
+                    <div class="flex-shrink-0 mx-auto md:mx-0">
+                        <div class="relative group">
+                            @if(comic.coverUrl) {
+                            <div
+                                class="w-[180px] h-[240px] md:w-[240px] md:h-[320px] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.02] border-4 border-[#3BB2BF]">
+                                <img [src]="'/api/thumbnail?src=' + encodeUrl(comic.coverUrl) + '&width=480&height=640'"
+                                    alt="封面" class="w-full h-full object-cover" />
+                            </div>
+                            } @else {
+                            <div
+                                class="w-[180px] h-[240px] md:w-[240px] md:h-[320px] bg-[#606063]/10 rounded-lg flex items-center justify-center text-[#606063] border-2 border-dashed border-[#606063]/30">
+                                <span class="font-medium">無封面影像</span>
+                            </div>
+                            }
+
+                            <!-- 頁數標籤 -->
+                            <div
+                                class="absolute -bottom-3 -right-3 bg-[#D9A491] text-white px-4 py-1 rounded-full text-sm font-bold shadow-md">
+                                {{ comic?.pages?.length }}P
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 資訊詳情區域 -->
+                    <div class="flex-grow space-y-4 text-[#606063]">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm md:text-base">
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">作者：</span>
+                                <span class="hover:text-[#3BB2BF] cursor-pointer transition-colors">{{ info?.author
+                                    }}</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">社團：</span>
+                                <span>{{ info?.group }}</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">類型：</span>
+                                <span
+                                    class="px-2 py-0.5 bg-[#3BB2BF]/10 text-[#3BB2BF] rounded text-xs font-semibold">{{
+                                    info?.type }}</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">語言：</span>
+                                <span>{{ info?.language }}</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">原作：</span>
+                                <span class="text-[#D9A491] font-medium">{{ info?.series }}</span>
+                            </div>
+
+                            <div class="flex items-start">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">分級：</span>
+                                <span [class]="info?.category === '18+' ? 'text-red-500' : ''">{{ info?.category
+                                    }}</span>
+                            </div>
+
+                            <div class="flex items-start col-span-full">
+                                <span class="font-bold w-24 shrink-0 text-[#3BB2BF]">角色：</span>
+                                <span class="flex flex-wrap gap-1">
+                                    {{ info?.characters }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 標籤區塊 -->
+                        <div class="pt-2 border-t border-[#D8D4D1]">
+                            <div class="flex items-start gap-2">
+                                <span class="font-bold shrink-0 text-[#3BB2BF] mt-1">標籤：</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <!-- 假設標籤是逗號分隔字串，實際可用 split 處理 -->
+                                    <span
+                                        class="px-3 py-1 bg-[#D8D4D1] text-[#606063] rounded-full text-xs hover:bg-[#606063] hover:text-white transition-all cursor-pointer">
+                                        {{ info?.tags }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI 標記與描述 -->
+                        <div class="flex items-center gap-4 text-xs">
+                            <span class="flex items-center gap-1 font-semibold"
+                                [class.text-green-600]="!info?.ai_generated"
+                                [class.text-[#D9A491]]="info?.ai_generated">
+                                <span class="w-2 h-2 rounded-full bg-current"></span>
+                                AI 生成：{{ info?.ai_generated ? '是' : '否' }}
+                            </span>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-[#D8D4D1]/30 rounded-xl italic text-sm border-l-4 border-[#D9A491]">
+                            <p class="leading-relaxed whitespace-pre-line">
+                                {{ info?.description || '尚無描述。' }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <app-toolbar></app-toolbar>
+        <app-page-grid></app-page-grid>
+    </div>
+
+    <p-dialog [modal]="true" [dismissableMask]="true"
+        [visible]="(communicationService.activeImageViewer$ | async) || false"
+        (visibleChange)="communicationService.setActiveImageViewer(false)" [style]="{ width: '95%', height: '95%' }"
+        [contentStyle]="{ height: '100%', padding: '5px', borderTop: '1px solid #ccc' }">
+
+        <ng-template #headless>
+            <div class="relative w-full h-full max-w-full max-h-full overflow-hidden">
+                <app-image-viewer></app-image-viewer>
+            </div>
+        </ng-template>
+    </p-dialog>
+    <app-comic-edit></app-comic-edit>
+</app-layout>

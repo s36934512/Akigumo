@@ -1,0 +1,107 @@
+<section class="overflow-x-hidden rounded-3xl px-6 py-10 text-white md:px-10" [class.min-h-screen]="!compact"
+    [class.py-8]="compact"
+    [class.bg-[radial-gradient(1200px_420px_at_80%_-20%,rgba(59,178,191,0.18),transparent_62%),radial-gradient(900px_380px_at_-10%_120%,rgba(217,164,145,0.12),transparent_65%),#09090b]]="true">
+    <div class="mx-auto w-full max-w-7xl" [class.space-y-20]="!compact" [class.space-y-10]="compact">
+        <header *ngIf="showHeader" class="relative py-6">
+            <div
+                class="pointer-events-none absolute -left-4 top-0 select-none text-[clamp(2.8rem,10vw,6.4rem)] font-black italic tracking-[-0.05em] text-white/5">
+                MATRIX
+            </div>
+
+            <div class="relative z-10 flex flex-col items-start gap-2">
+                <div
+                    class="flex items-center gap-3 font-mono text-[0.78rem] font-bold uppercase tracking-[0.3em] text-[#d9a491]">
+                    <span class="h-2.5 w-2.5 rounded-full bg-[#3bb2bf]"></span>
+                    <span>Visual_Index_V3</span>
+                </div>
+
+                <h1 class="text-[clamp(2.2rem,6.4vw,5.2rem)] font-black italic leading-[0.95] tracking-[-0.04em]">
+                    ENTITY<span class="text-[#3bb2bf]">.GALLERY</span>
+                </h1>
+
+                <p
+                    class="mt-3 max-w-md border-l border-[#3bb2bf] pl-4 font-mono text-[0.68rem] uppercase tracking-[0.08em] leading-[1.7] text-[#606063]">
+                    以影像實體為核心的檢索介面。滑鼠懸停以觸發「出框」視覺協議，解構元數據層級。
+                </p>
+            </div>
+        </header>
+
+        <div class="grid gap-x-8 gap-y-16" [class.grid-cols-1]="compact" [class.md:grid-cols-2]="compact"
+            [class.lg:grid-cols-2]="compact" [class.md:grid-cols-2]="!compact" [class.lg:grid-cols-4]="!compact">
+            <article *ngFor="let item of data; let i = index" class="relative px-3 pb-12 pt-10"
+                (mouseenter)="setHovered(i)" (mouseleave)="setHovered(null)">
+                <div class="group relative h-[340px] w-full cursor-pointer rounded-xl md:h-[380px]"
+                    [class.h-[310px]]="compact">
+                    <div
+                        class="absolute inset-0 rounded-xl bg-[#18181b] shadow-[0_16px_48px_rgba(0,0,0,0.55)] transition-transform duration-500 group-hover:scale-[0.98]">
+                    </div>
+
+                    <div class="absolute inset-0 z-10 overflow-hidden rounded-xl transition-all duration-500"
+                        [class.p-0]="hoveredIndex !== i" [class.p-3]="hoveredIndex === i">
+                        <div class="relative h-full w-full overflow-hidden rounded-lg bg-[#050505]">
+                            <img *ngIf="item.coverUrl" [src]="item.coverUrl" [alt]="item.title"
+                                class="absolute inset-0 z-[5] h-full w-full object-cover opacity-85 transition duration-700"
+                                [class.scale-105]="hoveredIndex === i" />
+
+                            <div class="absolute inset-0 z-10 opacity-40 transition duration-700"
+                                [class]="bgGradient(item.type)" [class.scale-110]="hoveredIndex === i"
+                                [class.rotate-2]="hoveredIndex === i"></div>
+
+                            <div class="absolute inset-0 z-20 flex items-center justify-center" *ngIf="!item.coverUrl">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                                    class="h-[84px] w-[84px] text-[#d8d4d1] transition-all duration-700"
+                                    [class.opacity-60]="hoveredIndex !== i" [class.opacity-20]="hoveredIndex === i"
+                                    [class.text-[#3bb2bf]]="hoveredIndex === i" [class.scale-150]="hoveredIndex === i">
+                                    <path [attr.d]="iconPath(item.icon)"></path>
+                                </svg>
+                            </div>
+
+                            <div *ngIf="hoveredIndex === i"
+                                class="absolute left-0 right-0 z-30 h-[2px] animate-[scan-y_2s_linear_infinite] bg-[linear-gradient(90deg,transparent,rgba(59,178,191,0.55),transparent)]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pointer-events-none absolute left-1 top-12 z-40 transition-all duration-300"
+                    [class.opacity-0]="hoveredIndex !== i" [class.opacity-100]="hoveredIndex === i"
+                    [class.-translate-x-0]="hoveredIndex !== i" [class.-translate-y-0]="hoveredIndex !== i"
+                    [class.-translate-x-6]="hoveredIndex === i" [class.-translate-y-2]="hoveredIndex === i">
+                    <h3
+                        class="m-0 text-[clamp(2.2rem,4.2vw,3.8rem)] font-black italic leading-[0.95] tracking-[-0.05em]">
+                        {{ splitTitle(item.title)[0] }}<br />
+                        <span class="ml-6 text-[#3bb2bf]">{{ splitTitle(item.title)[1] }}</span>
+                    </h3>
+                </div>
+
+                <div class="pointer-events-none absolute -bottom-1 right-1 z-40 text-right transition-all duration-300"
+                    [class.opacity-0]="hoveredIndex !== i" [class.opacity-100]="hoveredIndex === i"
+                    [class.translate-x-0]="hoveredIndex !== i" [class.translate-y-0]="hoveredIndex !== i"
+                    [class.translate-x-4]="hoveredIndex === i" [class.translate-y-6]="hoveredIndex === i">
+                    <div
+                        class="mb-1 inline-block -rotate-1 bg-[#d9a491] px-3 py-1 text-lg font-black italic text-black">
+                        {{ item.type }}
+                    </div>
+                    <div class="bg-[#09090b] px-2 py-1 font-mono text-[0.62rem] tracking-[0.28em] text-[#d8d4d1]">
+                        {{ item.subtitle }}
+                    </div>
+                </div>
+
+                <div class="pointer-events-none absolute right-6 top-3 z-40 font-mono text-[0.62rem] uppercase tracking-[0.06em] text-[#3bb2bf] transition-all duration-300"
+                    [class.opacity-0]="hoveredIndex !== i" [class.opacity-100]="hoveredIndex === i"
+                    [class.translate-y-0]="hoveredIndex !== i" [class.-translate-y-4]="hoveredIndex === i">
+                    ACTIVE_LINK
+                </div>
+            </article>
+        </div>
+
+        <footer *ngIf="showFooter"
+            class="flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-10 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-[#606063] md:flex-row md:items-center">
+            <div class="flex flex-wrap gap-8">
+                <span>IMAGE_DOMINANT: TRUE</span>
+                <span>ASYMMETRIC_LAYOUT: ENABLED</span>
+            </div>
+            <div class="font-bold tracking-[0.16em] text-[#3bb2bf]">System Monitoring Active</div>
+        </footer>
+    </div>
+</section>

@@ -1,0 +1,13 @@
+type: object
+required:
+  - totalCount
+  - ids
+properties:
+  totalCount:
+    type: integer
+    description: 資料總筆數，用於計算捲軸高度
+  ids:
+    type: array
+    items:
+      type: string
+    description: 排序後的 ID 陣列

@@ -1,0 +1,10 @@
+# Core dependencies for batch consumer
+redis>=5.0.0
+neo4j>=5.22.0
+
+# Development and testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Optional: For performance monitoring
+# prometheus-client>=0.16.0

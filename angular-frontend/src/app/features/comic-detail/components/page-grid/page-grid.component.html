@@ -1,0 +1,22 @@
+@let file = communicationService.comicFile$ | async;
+@let gridCols = communicationService.gridCols$ | async;
+
+<div class="grid gap-6 transition-all duration-500 ease-in-out"
+    [style.gridTemplateColumns]="'repeat(' + gridCols + ', minmax(0, 1fr))'">
+    @for (page of file?.pages; track page.url) {
+    <!-- <div (click)="communicationService.setCurrentPage(page)"
+        class="group relative aspect-[3/4] bg-white/5 rounded-2xl border border-white/5 overflow-hidden cursor-pointer hover:border-cyan-500/50 transition-all hover:-translate-y-1 shadow-2xl">
+
+        <img [src]="page.thumbnail"
+            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
+        </div>
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+            <span class="text-[10px] font-mono text-white font-bold">#{{ $index + 1 }}</span>
+        </div>
+        <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-icons text-white text-sm bg-black/40 rounded-full p-1">zoom_in</span>
+        </div>
+    </div> -->
+    }
+</div>

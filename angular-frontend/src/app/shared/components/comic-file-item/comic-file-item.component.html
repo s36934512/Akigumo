@@ -1,0 +1,19 @@
+@let layout = viewModelService.layout$ | async;
+@let totalPages = layout?.totalPages;
+@let url = layout?.url;
+@let selected = viewModelService.selected$ | async;
+
+<div class="w-full aspect-[3/4] relative box-border flex flex-col border-3 items-center shadow hover:shadow-lg cursor-pointer transition-shadow duration-200"
+    [class.border-red-500]="selected" [class.border-transparent]="!selected">
+
+    @if (totalPages) {
+    <div class="absolute right-2 bottom-2 bg-black/70 text-white px-2 py-1 rounded-full text-xs pointer-events-none">
+        {{ totalPages }}
+    </div>
+    }
+    @if (url) {
+    <img [src]="url" alt="封面" class="object-contain rounded-lg w-full aspect-[3/4]" />
+    } @else {
+    <span>無封面</span>
+    }
+</div>

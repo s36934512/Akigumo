@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>上傳漫畫</title>
+    <link rel="stylesheet" href="comic_upload.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h2>上傳漫畫</h2>
+            <form id="comicForm">
+                <label>標題：<input type="text" name="title" id="titleInput" required></label>
+                <label>作者：<input type="text" name="author"></label>
+                <label>標籤（逗號分隔）：<input type="text" name="tags"></label>
+                <label>漫畫壓縮檔（zip/rar）：<input type="file" name="zipfile" id="zipfileInput" accept=".zip,.rar"
+                        required></label>
+                <button type="submit" id="uploadBtn">上傳</button>
+            </form>
+            <button id="backBtn" onclick="location.href='index.html'">返回主畫面</button>
+            <div id="result"></div>
+        </div>
+        <div class="right" id="previewPanel" style="display:block;flex:2;">
+            <h3>圖片預覽</h3>
+            <div class="image-list" id="imageList"></div>
+            <button id="confirmOrderBtn" style="margin-top:16px;">確定順序</button>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="comic_upload.js"></script>
+</body>
+
+</html>

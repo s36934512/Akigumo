@@ -1,0 +1,20 @@
+<div class="flex items-center p-1 rounded-2xl bg-black/20 border border-white/5">
+    <p-button icon="pi pi-angle-double-left" [text]="true" (click)="toPage(1)" [disabled]="!canPrevPage"
+        styleClass="!w-8 !h-8 !text-white/50"></p-button>
+    <p-button icon="pi pi-angle-left" [text]="true" (click)="toPage(currentPage - 1)" [disabled]="!canPrevPage"
+        styleClass="!w-8 !h-8 !text-white/50"></p-button>
+
+    <div class="flex items-center px-1">
+        <p-inputNumber [ngModel]="currentPage" (ngModelChange)="toPage($event.value ?? $event)"
+            [min]="totalPages === 0 ? 0 : 1" [max]="totalPages" styleClass="!w-12"
+            [inputStyle]="{'width': '100%', 'background': 'transparent', 'border': 'none', 'color': 'white', 'text-align': 'center'}">
+        </p-inputNumber>
+        <span class="mx-2 opacity-30 text-[10px] text-white">/</span>
+        <span class="text-xs opacity-50 font-bold text-white">{{ totalPages }}</span>
+    </div>
+
+    <p-button icon="pi pi-angle-right" [text]="true" (click)="toPage(currentPage + 1)" [disabled]="!canNextPage"
+        styleClass="!w-8 !h-8 !text-white/50"></p-button>
+    <p-button icon="pi pi-angle-double-right" [text]="true" (click)="toPage(totalPages)" [disabled]="!canNextPage"
+        styleClass="!w-8 !h-8 !text-white/50"></p-button>
+</div>

@@ -1,0 +1,125 @@
+/* 預覽區拖曳佔位元素樣式 */
+.placeholder-item {
+    border: 2px dashed #007bff;
+    background: #e6f0ff;
+    min-height: 180px;
+    width: 140px;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 2em;
+}
+
+label {
+    display: block;
+    margin-top: 1em;
+}
+
+input,
+textarea {
+    width: 300px;
+}
+
+#result {
+    margin-top: 2em;
+    color: green;
+}
+
+#backBtn {
+    margin-top: 2em;
+}
+
+.dragging {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 1000;
+    transform: translate(0, 0);
+}
+
+.container {
+    display: flex;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.left,
+.right {
+    padding: 32px 24px;
+}
+
+.left {
+    flex: 1;
+    border-right: 1px solid #eee;
+}
+
+.right {
+    display: block;
+}
+
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    min-height: 200px;
+}
+
+.image-item {
+    position: relative;
+    width: 140px;
+    height: 180px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: grab;
+}
+
+.image-item img {
+    max-width: 120px;
+    max-height: 140px;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #ff4d4f;
+    color: #fff;
+}
+
+.drag-over {
+    border: 2px dashed #007bff;
+}
+
+.drop-slot {
+    width: 140px;
+    height: 16px;
+    margin-bottom: 4px;
+    background: #e6f0ff;
+    border-radius: 6px;
+    border: 2px dashed #007bff;
+    transition: background 0.2s;
+}

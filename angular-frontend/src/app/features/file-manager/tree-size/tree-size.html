@@ -1,0 +1,9 @@
+<ul class="tree-size-list">
+    <ng-container *ngFor="let node of tree">
+        <li>
+            <span class="node-name">{{ node.name }}</span>
+            <span class="node-size">{{ formatSize(node.size) }}</span>
+            <app-tree-size *ngIf="node.children?.length" [tree]="node.children"></app-tree-size>
+        </li>
+    </ng-container>
+</ul>

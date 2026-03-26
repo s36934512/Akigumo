@@ -1,0 +1,42 @@
+enum OutboxStatus {
+    DISPATCHED
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+}
+
+model Outbox {
+    id            BigInt       @id @default(autoincrement()) // 順序的保證
+    correlationId String       @map("correlation_id")
+    workflowId    String?      @map("workflow_id") // 可選，對應要觸發的 Workflow 模板 ID (如 'user-onboarding')
+    aggregateType String       @map("aggregate_type") // "User", "Item" 等
+    aggregateId   String?      @map("aggregate_id") // 該資料的 ID ("User.id", "Item.id" 等)
+    operation     String // create, update, connect...
+    payload       Json // 存入整個 args.data
+    status        OutboxStatus @default(PENDING)
+    version       Int          @default(0) // 用於樂觀鎖，確保不會有多個 worker 同時處理同一筆資料
+    attempts      Int          @default(0)
+    lastError     String?      @map("last_error") // 方便排查為何失敗
+    createdTime   DateTime     @default(now()) @map("created_time")
+    updatedTime   DateTime     @updatedAt @map("updated_time")
+    scheduledTime DateTime?    @map("scheduled_time") // 實現指數退避 (Exponential Backoff)
+
+    @@index([status, createdTime])
+    @@map("outbox")
+}
+
+model WorkflowState {
+    id            String   @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    workflowId    String   @map("workflow_id")
+    correlationId String   @unique @map("correlation_id")
+    status        String
+    tasks         Json?
+    dataPool      Json?    @map("data_pool") // 存放狀態機運行過程中產生的資料，如 API 回應、計算結果等
+    snapshot      Json? // 存放 XState 的完整序列化狀態 (context, value, history)
+    schemaVersion Int      @default(1) @map("schema_version") // 以便未來狀態結構變更時的版本控制
+    updatedTime   DateTime @updatedAt @map("updated_time")
+
+    @@index([workflowId, status])
+    @@map("workflow_state")
+}

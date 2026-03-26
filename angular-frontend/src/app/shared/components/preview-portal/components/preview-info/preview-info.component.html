@@ -1,0 +1,17 @@
+@let title = viewModelService.title$ | async;
+@let total = viewModelService.totalPages$ | async;
+@let layout = viewModelService.layout$ | async;
+@let index = layout?.index;
+
+<div class="p-2 flex gap-2 content-baseline">
+    @if (index !== undefined && total) {
+    <div class="flex items-center text-sm">
+        <span class="text-gray-400">{{ index + 1 }}</span>
+        <span class="mx-2 text-gray-300">/</span>
+        <span class="text-blue-500 font-semibold hover:underline cursor-pointer">{{ total }}</span>
+    </div>
+    }
+    <p class="text-gray-900 truncate">
+        {{ title ?? '' }}
+    </p>
+</div>

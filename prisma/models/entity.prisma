@@ -1,0 +1,25 @@
+model Entity {
+    id          String  @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    name        String
+    description String?
+    metadata    Json?
+    version     Int     @default(1)
+
+    createdTime  DateTime  @default(now()) @map("created_time")
+    modifiedTime DateTime  @updatedAt @map("modified_time")
+    verifiedTime DateTime? @map("verified_time")
+
+    verifiedBy String? @map("verified_by") @db.Uuid
+    user       User?   @relation(fields: [verifiedBy], references: [id])
+
+    @@map("entity")
+}
+
+// model EntityType {
+//     id          Int     @id @default(autoincrement())
+//     code        String  @unique
+//     name        String
+//     description String?
+
+//     @@map("entity_type")
+// }

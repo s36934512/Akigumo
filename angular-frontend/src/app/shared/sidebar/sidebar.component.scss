@@ -1,0 +1,18 @@
+.mat-mdc-nav-list {
+    --mat-list-list-item-label-text-color: #2f4124;
+    opacity: 1;
+}
+
+.mat-drawer {
+    --mat-sidenav-container-width: 240px;
+    --mat-sidenav-container-background-color: rgb(208 162 136);
+    opacity: 0.8;
+}
+
+//   const theme = {
+//     primary: '#3BB2BF',   // 青藍 (頭髮高光/強調色)
+//     darkGray: '#606063',  // 深灰 (制服/側邊欄)
+//     coral: '#D9A491',     // 裸粉 (髮飾/點綴色)
+//     lightGray: '#D8D4D1', // 淺灰 (背景/內襯)
+//     pureWhite: '#FFFFFF'
+//   };

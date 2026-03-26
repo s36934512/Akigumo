@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Item Management API
+  version: 1.0.0
+  description: 支援無限滾動與兩階段加載的 API 規範
+
+servers:
+  - url: http://localhost:3000/api
+
+paths:
+  /items/indices:
+    get:
+      summary: 第一階段：取得全量 ID 索引
+      operationId: getItemIndices
+      parameters:
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [price, createdAt, name]
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        '200':
+          description: 回傳排序後的 ID 清單
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/items/index.yaml'
+
+  /items/batch-details:
+    post:
+      summary: 第二階段：根據 ID 批量取得摘要內容
+      operationId: getItemBatchDetails
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: 回傳詳細資料清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/items/summary.yaml'

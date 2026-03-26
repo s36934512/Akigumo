@@ -1,0 +1,29 @@
+@let toolbarConfig = imageViewerDataService.toolbarConfig$ | async;
+@let rotation = toolbarConfig?.rotation;
+@let zoom = toolbarConfig?.zoom;
+@let currentPageUrl = imageViewerDataService.currentPageUrl$ | async;
+@let isDragging = componentsCommunicationService.isDragging$ | async;
+@let pan = componentsCommunicationService.pan$ | async;
+@let leftbound = imageViewerDataService.leftbound$ | async;
+@let rightbound = imageViewerDataService.rightbound$ | async;
+
+<div class="flex align-middle justify-center h-full w-full min-h-0 bg-[#f0f0f0] gap-2">
+    <p-button text class="m-auto" [disabled]="leftbound" (click)="imageViewerDataService.setPreviousPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 -960 960 960" width="2rem" fill="#1f1f1f">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+        </svg>
+    </p-button>
+
+    <div class="overflow-auto flex-1 m-auto max-w-full max-h-full min-h-0 h-full w-full">
+        <img class="max-w-full max-h-full fit-contain min-h-0 min-w-0 m-auto" [src]="currentPageUrl" alt="圖片"
+            (dragstart)="$event.preventDefault()"
+            [style.transform]="'translate(' + (pan?.x ?? 0) + 'px, ' + (pan?.y ?? 0) + 'px) rotate(' + rotation + 'deg) scale(' + zoom + ')'"
+            [style.transition]="isDragging ? 'none' : 'transform 0.2s'" (load)="onImageLoad($event)" />
+    </div>
+
+    <p-button text class="m-auto" [disabled]="rightbound" (click)="imageViewerDataService.setNextPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 -960 960 960" width="2rem" fill="#1f1f1f">
+            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+        </svg>
+    </p-button>
+</div>

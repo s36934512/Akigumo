@@ -1,0 +1,45 @@
+<!-- <app-sidebar-layout [menuIcon]="'chevron_left'" [collapsedIcon]="'chevron_right'">
+    <mat-nav-list sidebar>
+        <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.link">
+            {{ item.label }}
+        </a>
+    </mat-nav-list>
+
+
+    <mat-toolbar color="primary" class="layout-header">
+
+        <span>網站標題</span>
+        可放 logo、導航列等
+    </mat-toolbar>
+
+    <main class="layout-main">
+        <ng-content></ng-content>
+    </main>
+
+    <mat-toolbar color="primary" class="layout-footer" role="contentinfo">
+        <span>© 2025 網站名稱</span>
+    </mat-toolbar>
+
+</app-sidebar-layout> -->
+<!-- 側邊欄顯示/隱藏按鈕 -->
+<button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+</button>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" [(opened)]="sidebarOpened">
+        <div class="sidebar-menu">
+            <button mat-button *ngFor="let btn of buttons" (click)="select(btn)">
+                {{ btn.label }}
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <ng-container [ngSwitch]="selectedBtn?.id">
+                <div *ngSwitchCase="'a'">功能A內容</div>
+                <div *ngSwitchCase="'b'">功能B內容</div>
+                <div *ngSwitchDefault>請選擇功能</div>
+            </ng-container>
+        </div>
+    </mat-sidenav>
+    <section>Main Content</section>
+</mat-sidenav-container>

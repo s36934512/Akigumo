@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>漫畫列表</title>
+    <style>
+        .thumbs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .thumbs img {
+            border: 1px solid #aaa;
+            margin: 2px;
+            cursor: pointer;
+            width: 80px;
+            height: 110px;
+            object-fit: cover;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            box-shadow: 0 0 16px #000;
+            background: #fff;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 140px;
+        }
+
+        .actions button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>漫畫列表</h2>
+    <button onclick="location.href='comic_upload.html'">上傳新漫畫</button>
+    <table id="comicTable">
+        <thead>
+            <tr>
+                <th>封面</th>
+                <th>標題</th>
+                <th>作者</th>
+                <th>出版日期</th>
+                <th>標籤</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <div id="modal" class="modal">
+            <img id="modalImg" class="modal-img" src="" alt="大圖">
+        </div>
+    </table>
+    <script>
+        async function loadComics() {
+            const res = await fetch('/comics');
+            const comics = await res.json();
+            const tbody = document.querySelector('#comicTable tbody');
+            tbody.innerHTML = '';
+            for (const comic of comics) {
+                const tr = document.createElement('tr');
+                // 縮圖區
+                const thumbsTd = document.createElement('td');
+                const thumbsDiv = document.createElement('div');
+                thumbsDiv.className = 'thumbs';
+                // 取得所有頁面 id
+                const resp = await fetch(`/images?filename=${encodeURIComponent(comic.title)}`);
+                const imageIds = await resp.json();
+                imageIds.forEach((id, idx) => {
+                    const thumb = document.createElement('img');
+                    thumb.src = '/image/' + id;
+                    thumb.title = `第${idx + 1}頁`;
+                    thumb.addEventListener('mouseenter', () => {
+                        showModal(imageIds, idx);
+                    });
+                    thumbsDiv.appendChild(thumb);
+                });
+                thumbsTd.appendChild(thumbsDiv);
+                tr.appendChild(thumbsTd);
+                // 標題
+                tr.innerHTML += `<td>${comic.title || ''}</td>`;
+                // 作者
+                tr.innerHTML += `<td>${comic.author || ''}</td>`;
+                // 出版日期
+                tr.innerHTML += `<td>${comic.publish_date || ''}</td>`;
+                // 標籤
+                tr.innerHTML += `<td>${comic.tags || ''}</td>`;
+                // 操作
+                const actionsTd = document.createElement('td');
+                actionsTd.className = 'actions';
+                tr.appendChild(actionsTd);
+                tbody.appendChild(tr);
+            }
+        }
+        // loadComics();
+
+        // 彈窗大圖區
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        let modalImageIds = [];
+        let modalCurrent = 0;
+        function showModal(imageIds, idx) {
+            modalImageIds = imageIds;
+            modalCurrent = idx;
+            modalImg.src = '/image/' + imageIds[idx];
+            modal.classList.add('active');
+        }
+        modal.addEventListener('wheel', function (e) {
+            if (!modal.classList.contains('active')) return;
+            e.preventDefault();
+            if (!modalImageIds.length) return;
+            if (e.deltaY > 0) {
+                modalCurrent = (modalCurrent + 1) % modalImageIds.length;
+            } else {
+                modalCurrent = (modalCurrent - 1 + modalImageIds.length) % modalImageIds.length;
+            }
+            modalImg.src = '/image/' + modalImageIds[modalCurrent];
+        }, { passive: false });
+        modal.addEventListener('click', function () {
+            modal.classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>

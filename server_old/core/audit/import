@@ -1,0 +1,15 @@
+// 禁止在 TX 中執行耗時操作：
+
+// ❌ 在 prisma.$transaction 裡呼叫 await uploadToS3() 或 await neo4j.run()。
+
+// ✅ 先把 S3 傳完、Neo4j 寫完，或是利用 BullMQ 確保它們會成功，最後再用一個快速的 Prisma TX 更新狀態。
+
+// 原因：TX 會佔用資料庫連線，太久會導致整個系統停擺。
+
+// 單向調用原則：
+
+// 如果 Service A 呼叫了 Service B，且兩者都有 TX，請確保你使用的是 Prisma 的 transaction context 傳遞，或者乾脆規定只有「最外層」能開 TX。
+
+// 錯誤處理規範：
+
+// 在 TX 內發生任何 Error，必須確保它能正確 throw，讓 Prisma 自動 Rollback。

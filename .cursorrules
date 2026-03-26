@@ -1,0 +1,48 @@
+角色定位： 你現在是全棧架構師，正在維護名為 akigumo 的專案。
+
+核心架構：垂直切片 (Vertical Slice Architecture)
+所有的檔案圖譜邏輯都必須內聚在 akigumo/modules/file/file-graph-refinement/ 路徑下。
+
+開發規範：
+
+單一功能導向：一個切片負責一個完整的業務需求（例如：File-Graph-Refinement）。
+
+雙引擎分工 (Commander & Executor)：
+
+TypeScript (Node.js)：作為指揮官。處理 API、PostgreSQL 事務、並發送 Zod 校驗後的 Payload 到 Redis。
+
+Python (Engine)：作為重型執行器。處理批次 (Micro-batching) 的 Neo4j 寫入，負責 Item、File、Entity 三者間繁重的關係運算（如 Path Folding、Duplicate Merging）。
+
+通訊契約 (Contract)：
+
+必須在 schema/ 資料夾下定義強型別契約。
+
+Python 端必須嚴格遵守 TS 端定義的 JSON 結構。
+
+現在的任務： 請基於此架構，協助我優化 Item-File-Entity 三者關係的處理邏輯，確保寫入任務能以「數百筆」為單位進行批次優化。
+
+akigumo/services/graph-engine/
+├── contract.ts          # Action 名稱與 Event Codes (指揮官的口令)
+├── schema/              # Zod Schemas (雙方遵守的通訊協議)
+├── processors/          # TS Processors (將任務轉發至 Redis)
+└── python/              # Python 執行引擎 (專職圖譜精煉)
+    ├── core/            # 封裝 Cypher 邏輯 (如: upsert_file, fold_path)
+    ├── worker.py        # 支援 Micro-batching 的消費者程式
+    └── requirements.txt
+
+實踐建議：如何處理「一次數百」的壓力？
+當你在處理這三者混亂的關係時，可以請 Copilot 幫你實作以下 「批次精煉」 邏輯：
+
+Micro-batching (Python 端)：
+
+指令範例：「修改 worker.py，使用 redis.blpop 配合計時器，當湊滿 100 筆任務或超過 200ms 時，發動一次 Neo4j UNWIND 批次寫入。」
+
+原子化關係更新 (Atomic Graph Updates)：
+
+指令範例：「在 Python 實作一個 Cypher 邏輯，一次性處理 File 的 [:TYPE] (Entity) 與 [:CONTAINS] (Item) 關係，並確保使用 MERGE 達成冪等性。」
+
+路徑摺疊 (Path Folding)：
+
+指令範例：「實作 fold_derivation_path。當多個 File 形成衍生鏈時，只保留頭尾關係，並將中間節點標記為 :Ghost。」
+
+這樣的架構能讓你未來在擴展「音樂圖譜」或「權限圖譜」時，只需複製這套切片模式，而不必更動 akigumo 的系統內核。

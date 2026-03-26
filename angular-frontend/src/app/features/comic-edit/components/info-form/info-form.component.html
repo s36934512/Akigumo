@@ -1,0 +1,25 @@
+@let info = (comicEditData.editInfo$ | async);
+
+<div>
+    <p-iftalabel>
+        <input pInputText [ngModel]="info?.title" (ngModelChange)="updateField('title', $event)" name="title"
+            variant="filled" fluid />
+        <label for="title">漫畫名稱</label>
+    </p-iftalabel>
+
+    <div [ngClass]="fieldClass">
+        @for (field of comicEditData.editFields; track field.id) {
+        <p-iftalabel>
+            <input pInputText [id]="field.id" [ngModel]="info?.[field.key]"
+                (ngModelChange)="updateField('' + field.key, $event)" [name]="'' + field.key" variant="filled" fluid />
+            <label [for]="field.id">{{ field.label }}</label>
+        </p-iftalabel>
+        }
+    </div>
+
+    <div class="flex items-center gap-2 p-field">
+        <p-checkbox [ngModel]="info?.ai_generated" name="ai_generated" binary="true"
+            (ngModelChange)="updateField('ai_generated', $event)"></p-checkbox>
+        <label for="ai_generated" class="ml-2">AI 生成</label>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: docker
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: docker_logs
+      __path__: /var/lib/docker/containers/*/*.log
+
+  # 這裡的 pipeline 負責從檔案路徑中提取容器 ID
+  pipeline_stages:
+  - json:
+      expressions:
+        output: log
+        stream: stream
+        attrs: attrs
+  - json:
+      expressions:
+        tag:
+      source: attrs
+  - docker: {}

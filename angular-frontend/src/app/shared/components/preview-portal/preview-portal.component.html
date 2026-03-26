@@ -1,0 +1,16 @@
+@let layout = viewModelService.layout$ | async;
+@let url = layout?.url;
+@let width = layout?.width;
+@let height = layout?.height;
+
+<ng-template #previewTemplate>
+    <div class="flex flex-col bg-white border border-gray-300" [style.width.px]="width"
+        (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (wheel)="onMouseWheel($event)">
+
+        <app-preview-info></app-preview-info>
+
+        @if (url && width && height) {
+        <img [src]="url" [width]="width" [height]="height" priority class="object-contain" alt="preview" />
+        }
+    </div>
+</ng-template>

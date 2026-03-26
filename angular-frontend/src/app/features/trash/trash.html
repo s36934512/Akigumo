@@ -1,0 +1,22 @@
+<app-layout>
+    <div class="comic-list-container w-4/5 mx-auto">
+        <div *ngIf="loading">載入中...</div>
+        <div *ngIf="error" class="error">{{error}}</div>
+        <div *ngIf="!loading && !error && comics.length === 0">垃圾桶目前沒有漫畫</div>
+        <div *ngIf="selectedComics.size">
+            <span>已選取 {{selectedComics.size}} 本漫畫</span>
+            <button (click)="restoreComic()">還原</button>
+            <button class="danger" (click)="deleteComicPermanently()">永久刪除</button>
+        </div>
+        <p-dataview #dv *ngIf="comics.length" [value]="comics" [layout]="'grid'" class="justify-center gap-4">
+            <ng-template #grid let-items>
+                <div class="grid grid-cols-5 gap-2 justify-items-center">
+                    <div *ngFor="let comic of items">
+                        <!-- <app-comic-item [comic]="comic" [selected]="isComicSelected(comic)"
+                            (click)="onClick(comic, $event)"></app-comic-item> -->
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataview>
+    </div>
+</app-layout>

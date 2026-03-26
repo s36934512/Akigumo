@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    min-height: 0;
+}
+
+.layout-content {
+    overscroll-behavior: contain;
+}
+
+:host ::ng-deep .layout-content .h-screen {
+    height: 100% !important;
+}
+
+:host ::ng-deep .layout-content .min-h-screen {
+    min-height: 100% !important;
+}

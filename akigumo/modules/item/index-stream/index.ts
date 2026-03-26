@@ -1,0 +1,1 @@
+export { notifyIndexPatchesForLinkedItems } from './index-patch.notifier';

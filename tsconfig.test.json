@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs"
+  },
+  "include": [
+    "akigumo/**/*.test.ts",
+    "akigumo/**/*.spec.ts",
+    "generated/**/*.ts"
+  ]
+}

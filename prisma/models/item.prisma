@@ -1,0 +1,44 @@
+enum ItemType {
+    WORK
+    SERIES
+    COLLECTION
+    FILE_CONTAINER
+}
+
+enum ItemStatus {
+    // --- 作品/系列內容狀態 ---
+    ONGOING // 連載中
+    COMPLETED // 已完結
+    HIATUS // 休刊/斷更
+
+    // --- 發布/系統生命週期 ---
+    UPCOMING // 預購中 / 即將發布
+    DRAFT // 草稿 (僅自己可見)
+    PRIVATE // 私人 (已上傳但不想公開)
+
+    // --- 資料夾/合集專用 (選配) ---
+    ACTIVE // 正常 (預設狀態，代表此資料夾正在使用中)
+    ARCHIVED // 已歸檔 (代表此資料夾已整理完畢，不再頻繁變動，UI 上可以收納或隱藏)
+    LOCKED // 已鎖定 (代表此資料夾不允許再增加、刪除內含的 Item，僅供讀取)
+    HIDDEN // 隱藏 (在一般瀏覽模式下不顯示，除非開啟「顯示隱藏項目」)
+
+    // --- 處理狀態 (選配) ---
+    PROCESSING // 處理中 (例如正在上傳或轉檔的檔案，尚未完成)
+    DELETED // 已刪除 (代表此項目已被刪除，UI 上可以選擇不顯示或顯示為刪除狀態)
+    FAILED // 處理失敗 (例如上傳或轉檔失敗，UI 上可以顯示錯誤提示)
+}
+
+model Item {
+    id            String     @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    name          String
+    description   String?
+    metadata      Json?
+    type          ItemType
+    status        ItemStatus
+    publishedTime DateTime?  @map("published_time")
+
+    createdTime  DateTime @default(now()) @map("created_time")
+    modifiedTime DateTime @updatedAt @map("modified_time")
+
+    @@map("item")
+}

@@ -1,0 +1,274 @@
+// Drop zone styles
+.drop-zone {
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    padding: 32px 16px;
+    text-align: center;
+    margin: 1em 0;
+    background: #f9f9f9;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.drop-zone.dragover {
+    border-color: #007bff;
+    background: #e6f0ff;
+}
+
+.drop-zone input[type="file"] {
+    display: none;
+}
+
+.select-btn {
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.select-btn:hover {
+    background: #0056b3;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 2em;
+}
+
+label {
+    display: block;
+    margin-top: 1em;
+}
+
+input,
+textarea {
+    width: 300px;
+}
+
+#result {
+    margin-top: 2em;
+    color: green;
+}
+
+#backBtn {
+    margin-top: 2em;
+}
+
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.image-item {
+    position: relative;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: grab;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #ff4d4f;
+    color: #fff;
+}
+
+.cdk-drag-preview {
+    border: none;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.image-list.cdk-drop-list-dragging .image-item:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.main-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+.sidebar {
+    width: 200px;
+    background: #222;
+    color: #fff;
+    padding: 2em 1em 1em 1em;
+    box-sizing: border-box;
+    min-height: 100vh;
+    transition: width 0.2s;
+    margin-right: 2em;
+}
+
+.sidebar.collapsed {
+    width: 48px;
+    padding: 2em 0.2em 1em 0.2em;
+}
+
+.sidebar.collapsed h2,
+.sidebar.collapsed ul {
+    display: none;
+}
+
+.sidebar .collapse-btn {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.sidebar h2 {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    color: #fff;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin-bottom: 1em;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5em 1em;
+    display: block;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background: #007bff;
+    color: #fff;
+}
+
+.content {
+    flex: 1;
+    padding: 2em;
+    box-sizing: border-box;
+    min-width: 0;
+    transition: margin-left 0.2s;
+}
+
+.content-flex {
+    display: flex;
+    gap: 2em;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.left,
+.right {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.left {
+    width: 350px;
+    margin-right: 2em;
+    transition: width 0.2s;
+}
+
+.left.collapsed {
+    width: 48px;
+}
+
+.left.expanded {
+    width: 100%;
+    margin-right: 0;
+}
+
+.right {
+    width: calc(100% - 370px);
+    transition: width 0.2s;
+}
+
+.right.collapsed {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+
+.right.collapsed .collapse-btn {
+    margin-bottom: 0;
+}
+
+.collapse-btn {
+    display: block;
+    margin-bottom: 1em;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.collapse-btn:hover {
+    background: #0056b3;
+}
+
+.right-collapse-float {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    z-index: 10;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.right-collapse-float:hover {
+    background: #0056b3;
+}

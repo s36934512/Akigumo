@@ -1,0 +1,73 @@
+@let file = comicEditData.selectedFile$ | async;
+@let deleteMode = comicEditData.deleteMode$ | async;
+@let gridCols = comicEditData.gridCols$ | async;
+@let focusedPage = comicEditData.focusedPage$ | async;
+@let focusedPageIndex = focusedPage?.id || -1;
+@let pages = file?.pages?.length || 0;
+
+@if (focusedPage) {
+<div class="absolute inset-0 z-50 bg-black/95 flex flex-col animate-in fade-in duration-300 select-none">
+
+    <!-- 頂部工具列 -->
+    <div class="flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent">
+        <div class="flex items-center gap-4">
+            <button (click)="setCover()"
+                class="px-5 py-2 rounded-full bg-white/10 text-white text-[11px] font-bold uppercase tracking-wider hover:bg-white/20 transition-colors">
+                設為封面
+            </button>
+            <div class="text-sm font-medium text-zinc-400">
+                第 {{ focusedPageIndex + 1 }} / {{ pages }} 頁
+            </div>
+        </div>
+
+        <!-- 縮放與關閉控制項 -->
+        <div class="flex items-center gap-3">
+            <div class="flex items-center bg-zinc-800 rounded-full px-2 py-1">
+                <button (click)="zoomOut()"
+                    class="w-8 h-8 flex items-center justify-center hover:text-blue-400 transition-colors">
+                    <span class="text-xl">−</span>
+                </button>
+                <span class="w-16 text-center text-xs font-mono">{{ (zoomLevel() * 100).toFixed(0) }}%</span>
+                <button (click)="zoomIn()"
+                    class="w-8 h-8 flex items-center justify-center hover:text-blue-400 transition-colors">
+                    <span class="text-xl">+</span>
+                </button>
+                <button (click)="resetZoom()"
+                    class="ml-2 text-[10px] bg-zinc-700 px-2 py-1 rounded hover:bg-zinc-600">重置</button>
+            </div>
+
+            <button (click)="close()"
+                class="w-10 h-10 rounded-full bg-white/10 hover:bg-red-500 text-white border-none cursor-pointer flex items-center justify-center transition-all">
+                ✕
+            </button>
+        </div>
+    </div>
+
+    <!-- 主內容區：包含左右切換按鈕與圖片 -->
+    <div class="flex-1 relative flex items-center justify-center overflow-hidden touch-none" (wheel)="onWheel($event)">
+
+        <!-- 上一頁按鈕 -->
+        <button (click)="prevPage()" [class.opacity-0]="focusedPageIndex === 0"
+            class="absolute left-6 z-10 w-14 h-14 rounded-full bg-black/40 hover:bg-white/20 flex items-center justify-center transition-all cursor-pointer border border-white/10">
+            <span class="text-2xl">←</span>
+        </button>
+
+        <!-- 圖片容器 (支援縮放) -->
+        <div class="w-full h-full flex items-center justify-center overflow-auto p-10 custom-scrollbar">
+            <img [src]="focusedPage?.url" [style.transform]="'scale(' + zoomLevel() + ')'"
+                class="max-w-full max-h-full object-contain shadow-2xl transition-transform duration-200 ease-out origin-center">
+        </div>
+
+        <!-- 下一頁按鈕 -->
+        <button (click)="nextPage()" [class.opacity-0]="focusedPageIndex === (pages - 1)"
+            class="absolute right-6 z-10 w-14 h-14 rounded-full bg-black/40 hover:bg-white/20 flex items-center justify-center transition-all cursor-pointer border border-white/10">
+            <span class="text-2xl">→</span>
+        </button>
+    </div>
+
+    <!-- 底部快速指引 -->
+    <div class="p-4 text-center text-[10px] text-zinc-500 uppercase tracking-widest">
+        使用方向鍵 ← → 切換頁面 | 滾輪縮放
+    </div>
+</div>
+}

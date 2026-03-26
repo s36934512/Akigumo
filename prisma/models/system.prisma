@@ -1,0 +1,52 @@
+// enum SystemStatus {
+//     UNKNOWN
+//     NORMAL
+//     WARNING
+//     CRITICAL
+//     MAINTENANCE
+// }
+
+// model SystemEventLog {
+//     id            Int          @id @default(autoincrement())
+//     correlationId String       @map("correlation_id") @db.Uuid
+//     source        String?
+//     message       String?
+//     payload       Json?
+//     status        SystemStatus @default(UNKNOWN)
+//     redundancy    Json?
+//     timestamp     DateTime     @default(now())
+
+//     systemEventId Int         @map("system_event_id")
+//     systemEvent   SystemEvent @relation(fields: [systemEventId], references: [id])
+
+//     @@index([timestamp])
+//     @@index([status])
+//     @@map("system_event_log")
+// }
+
+// //
+// model SystemEvent {
+//     id          Int     @id @default(autoincrement())
+//     code        String  @unique
+//     name        String
+//     description String?
+
+//     systemEventTypeId Int             @map("system_event_type_id")
+//     systemEventType   SystemEventType @relation(fields: [systemEventTypeId], references: [id])
+
+//     systemEventLogs SystemEventLog[]
+
+//     @@map("system_event")
+// }
+
+// //
+// model SystemEventType {
+//     id          Int     @id @default(autoincrement())
+//     code        String  @unique
+//     name        String
+//     description String?
+
+//     systemEvent SystemEvent[]
+
+//     @@map("system_event_type")
+// }

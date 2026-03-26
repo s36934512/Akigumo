@@ -1,0 +1,14 @@
+{
+    "/api": {
+        "target": "http://localhost:3049",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/uploads/extracted": {
+        "target": "http://localhost:3049",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

@@ -1,0 +1,70 @@
+enum UserStatus {
+    PENDING
+    ACTIVE
+    LOCKED
+    SUSPENDED
+    DELETED
+}
+
+//
+model User {
+    id                    String     @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    name                  String
+    redundancy            Json?
+    createdTime           DateTime   @default(now()) @map("created_time")
+    lastStatusChangedTime DateTime   @default(now()) @map("last_status_changed_time")
+    status                UserStatus @default(ACTIVE)
+
+    accounts Account[]
+    sessions Session[]
+    entity   Entity[]
+
+    @@map("user")
+}
+
+// 帳號，系統使用者的登入資訊
+model Account {
+    id                    String     @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    provider              String // e.g., "LOCAL", "GOOGLE", "LINE"
+    providerUserId        String     @map("provider_user_id") // 第三方的唯一 ID 或本地的使用者名稱
+    passwordHash          String?    @map("password_hash")
+    retryCount            Int        @default(0) @map("retry_count")
+    redundancy            Json?
+    lastStatusChangedTime DateTime   @default(now()) @map("last_status_changed_time")
+    status                UserStatus @default(PENDING)
+
+    userId String @map("user_id") @db.Uuid
+    user   User   @relation(fields: [userId], references: [id])
+
+    sessions Session[]
+
+    @@unique([provider, providerUserId])
+    @@map("account")
+}
+
+//
+model Session {
+    id            String    @id @default(dbgenerated("uuidv7()")) @db.Uuid
+    currentHash   String    @unique @map("current_hash")
+    historyHashes String[]  @map("history_hashes")
+    ipAddress     String?   @map("ip_address")
+    rawUserAgent  String?   @map("raw_user_agent")
+    deviceType    String?   @map("device_type")
+    osName        String?   @map("os_name")
+    browserName   String?   @map("browser_name")
+    loginTime     DateTime  @default(now()) @map("login_time")
+    logoutTime    DateTime? @map("logout_time")
+    expiresTime   DateTime  @map("expires_time")
+    isRevoked     Boolean   @default(false) @map("is_revoked")
+    redundancy    Json?
+
+    userId    String  @map("user_id") @db.Uuid
+    user      User    @relation(fields: [userId], references: [id])
+    accountId String  @map("account_id") @db.Uuid
+    account   Account @relation(fields: [accountId], references: [id])
+
+    auditLogs AuditLog[]
+
+    @@index([historyHashes], name: "history_hashes_gin_idx", type: Gin)
+    @@map("session")
+}

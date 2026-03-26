@@ -1,0 +1,42 @@
+@let track = currentTrack();
+@let playing = store.isPlaying();
+@let progress = store.progress();
+
+<div class="music-console-hud" [class.pulse]="isPulsing()" [class.shake]="isShaking()">
+
+    <!-- CRT scanline overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Progress bar anchored to the bottom edge -->
+    <div class="progress-line" [style.width.%]="progress"></div>
+
+    <!-- Add-track button: square, micro-glow border -->
+    <button class="btn-hud btn-add" (click)="onAddClick()" title="新增音樂">
+        <span class="material-icons">add</span>
+    </button>
+
+    <!-- Scrolling track title -->
+    <div class="track-region">
+        @if (track) {
+        <div class="track-title" [class.marquee]="playing">
+            <span>{{ track.title }}</span>
+        </div>
+        } @else {
+        <div class="track-title no-track">-- NO SIGNAL --</div>
+        }
+    </div>
+
+    <!-- Playback controls: prev / play-pause / next -->
+    <div class="controls">
+        <button class="btn-hud" (click)="store.prev()" title="上一首">
+            <span class="material-icons">skip_previous</span>
+        </button>
+        <button class="btn-hud btn-play" (click)="togglePlay()" [title]="playing ? '暫停' : '播放'">
+            <span class="material-icons">{{ playing ? 'pause' : 'play_arrow' }}</span>
+        </button>
+        <button class="btn-hud" (click)="store.next()" title="下一首">
+            <span class="material-icons">skip_next</span>
+        </button>
+    </div>
+
+</div>

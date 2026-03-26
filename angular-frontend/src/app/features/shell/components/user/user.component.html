@@ -1,0 +1,19 @@
+@let isCollapsed = layoutDataService.isSidebarCollapsed$ | async;
+@let theme = layoutDataService.theme;
+@let isPinned = layoutDataService.isPinned$ | async;
+
+<div class="p-3 border-t" [style.borderTopColor]="'rgba(255,255,255,0.05)'">
+    <div class="flex items-center p-2 gap-3 rounded-lg hover:bg-white/5 cursor-pointer transition-all"
+        [class.justify-center]="isCollapsed">
+        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0"
+            [style.borderColor]="theme.primary">
+            <span class="text-[10px] font-black" [style.color]="theme.primary">S3</span>
+        </div>
+        @if (!isCollapsed) {
+        <div class="overflow-hidden">
+            <p class="text-[11px] font-bold m-0 truncate text-white">Shigure 改三</p>
+            <p class="text-[9px] m-0 opacity-40 font-mono italic">Pinned: {{ isPinned ? 'YES' : 'NO' }}</p>
+        </div>
+        }
+    </div>
+</div>

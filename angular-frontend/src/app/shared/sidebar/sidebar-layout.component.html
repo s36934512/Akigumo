@@ -1,0 +1,18 @@
+<mat-sidenav-container class="layout-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidebar">
+        <ng-content select="[sidebar]"></ng-content>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="toggleSidebar(sidenav)">
+                <mat-icon *ngIf="opened">{{ menuIcon }}</mat-icon>
+                <mat-icon *ngIf="!opened">{{ collapsedIcon }}</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="content">
+            <ng-content></ng-content>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

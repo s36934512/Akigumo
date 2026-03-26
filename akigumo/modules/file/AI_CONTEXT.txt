@@ -1,0 +1,41 @@
+1. 處理器：從「垃圾場」到「垂直行動單元」
+拆分門檻：當 processors.ts > 500 行，或包含 > 5 個獨立業務動作時，即刻資料夾化。
+
+命名規則：以「動詞」為核心（例如 upload.ts, sync.ts），而非技術類型。
+
+心理預期：修改 A 功能（如縮圖）絕對不會物理性地觸碰到 B 功能（如存檔）的程式碼。
+
+2. Schema：三層過濾網
+Contract (對外)：僅存放 API Request/Response 與 Error Codes。
+
+Logic (私有)：若該格式僅單一 Processor 使用，禁止進入 Contract，直接定義在該檔案內。
+
+Entity (核心)：跨處理器的核心數據結構（如 ComicBook），收納於 schema/entity.ts。
+
+3. Helper：三權分立（拒絕遮羞布）
+Pure Utils：無業務邏輯的工具函式（如時間格式化），放全域 shared/utils。
+
+Domain Driver：封裝複雜的資料庫查詢（如 getComicWithAuthors），放 core/db-queries.ts。
+
+Functional Helper：僅為了拆解 Processor 主函數，嚴禁開新檔，直接寫在同檔案底部（Private/Local）。
+
+4. 終極文件結構：俄羅斯娃娃模型
+Plaintext
+modules/feature-name/
+├── index.ts          <-- [模組出口]
+├── contract.ts       <-- 外部契約
+├── api/              <-- 接口層 (Handler/Route)
+│   ├── handler.ts    <-- 負責解析 Request，調用 Machine 或 Processor。
+│   └── route.ts      <-- 路由定義。
+├── core/             <-- 邏輯層 (Processors 垂直拆分 + db-queries)
+│   ├── index.ts      <-- 匯出所有 Processor。
+│   ├── processors/   <-- [垂直拆分後的處理器]
+│   └── queries/      <-- [Domain Driver] 複雜的 Prisma 查詢封裝。
+└── machine/          <-- 調度層 (XState 骨架 + machine.logic 接線)
+    ├── index.ts      <-- 導出 Machine。
+    ├── machine.ts    <-- 狀態機骨架（狀態定義、跳轉）。
+    └── logic.ts      <-- 狀態機的 Actions。這層只負責「接線」，把 Processor 封裝給 Machine 用。
+為什麼這能制約 AI？
+鎖定搜尋上下文：AI 每次修改被侷限在單一 Processor 檔案，降低它把 contract.ts 搞髒的機率。
+
+清晰的重構路徑：當檔案變大時，你不需要「思考」怎麼拆，只需按「資料庫相關 -> db-queries」或「步驟化 -> machine」進行物理搬運。

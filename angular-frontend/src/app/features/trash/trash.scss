@@ -1,0 +1,105 @@
+// .comic-list-container {
+//     max-width: 900px;
+//     margin: 0 auto;
+//     padding: 24px;
+// }
+
+// .comic-list {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 20px;
+// }
+
+// .comic-item {
+//     border: 1.5px solid #e57373;
+//     border-radius: 8px;
+//     background: #fff5f5;
+//     width: 180px;
+//     padding: 12px;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     box-shadow: 0 2px 8px #ffebee;
+//     position: relative;
+// }
+
+// .cover img {
+//     width: 120px;
+//     height: 160px;
+//     object-fit: cover;
+//     border-radius: 4px;
+//     border: 1px solid #bbb;
+// }
+
+// .cover span {
+//     display: inline-block;
+//     width: 120px;
+//     height: 160px;
+//     background: #eee;
+//     color: #888;
+//     text-align: center;
+//     line-height: 160px;
+//     border-radius: 4px;
+//     border: 1px solid #bbb;
+// }
+
+// .info {
+//     margin-top: 10px;
+//     width: 100%;
+//     text-align: center;
+// }
+
+// .title {
+//     font-weight: bold;
+//     font-size: 1.1em;
+//     margin-bottom: 4px;
+// }
+
+// .tags {
+//     color: #666;
+//     font-size: 0.95em;
+//     margin-bottom: 4px;
+// }
+
+// .pages {
+//     color: #888;
+//     font-size: 0.9em;
+// }
+
+// .trash-actions {
+//     display: flex;
+//     gap: 0.7em;
+//     margin-top: 10px;
+//     justify-content: center;
+// }
+
+// .trash-actions button {
+//     background: #fff;
+//     border: 1.5px solid #1976d2;
+//     color: #1976d2;
+//     border-radius: 4px;
+//     padding: 0.3em 1.1em;
+//     font-size: 1em;
+//     cursor: pointer;
+//     transition: background 0.2s, color 0.2s, border 0.2s;
+// }
+
+// .trash-actions button:hover {
+//     background: #1976d2;
+//     color: #fff;
+// }
+
+// .trash-actions .danger {
+//     border-color: #d32f2f;
+//     color: #d32f2f;
+// }
+
+// .trash-actions .danger:hover {
+//     background: #d32f2f;
+//     color: #fff;
+// }
+
+// .error {
+//     color: #c00;
+//     margin-bottom: 12px;
+// }

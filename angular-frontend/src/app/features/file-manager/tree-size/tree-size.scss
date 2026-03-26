@@ -1,0 +1,17 @@
+.tree-size-list {
+    list-style: none;
+    padding-left: 1.2em;
+
+    .node-name {
+        font-weight: bold;
+    }
+
+    .node-size {
+        color: #888;
+        margin-left: 0.5em;
+    }
+
+    li {
+        margin-bottom: 0.3em;
+    }
+}

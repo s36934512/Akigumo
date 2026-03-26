@@ -1,0 +1,53 @@
+enum ActionStatus {
+    SUCCESS
+    FAILED
+    PENDING
+    RUNNING // 適用於大型檔案傳輸或長任務
+}
+
+enum ActionCategory {
+    AUTH // 身分驗證 (Login, Logout)
+    DATA_OP // 資料異動 (CRUD)
+    FILE_IO // 檔案傳輸 (Upload, Download)
+    SECURITY // 安全事件 (Lock Account, Failed Attempts)
+    SYSTEM // 系統自動化任務
+}
+
+enum Severity {
+    LOW // 一般資訊 (Info)
+    MEDIUM // 需注意 (Warning)
+    HIGH // 嚴重問題 (Error/Critical)
+}
+
+//
+model AuditLog {
+    id            Int          @id @default(autoincrement())
+    message       String?
+    payload       Json?
+    correlationId String       @map("correlation_id") @db.Uuid
+    timestamp     DateTime     @default(now())
+    status        ActionStatus @default(PENDING)
+    severity      Severity     @default(LOW)
+
+    sessionId String?  @map("session_id") @db.Uuid
+    session   Session? @relation(fields: [sessionId], references: [id])
+    actionId  Int      @map("action_id")
+    action    Action   @relation(fields: [actionId], references: [id])
+
+    @@index([correlationId])
+    @@index([severity])
+    @@index([timestamp])
+    @@map("audit_log")
+}
+
+model Action {
+    id          Int            @id @default(autoincrement())
+    code        String         @unique
+    name        String
+    description String?
+    category    ActionCategory
+
+    AuditLogs AuditLog[]
+
+    @@map("action")
+}

@@ -1,0 +1,219 @@
+// ─── Keyframe animations ─────────────────────────────────────────────────────
+
+// Power-pulse: border flares bright then dims — fires when isPlaying toggles
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        border-color: rgba(59, 178, 191, 0.5);
+        box-shadow: 0 0 10px rgba(59, 178, 191, 0.3);
+    }
+
+    45% {
+        border-color: rgba(59, 178, 191, 1);
+        box-shadow:
+            0 0 18px rgba(59, 178, 191, 0.9),
+            0 0 36px rgba(59, 178, 191, 0.4);
+    }
+}
+
+// Mechanical shake on "+ add" click
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    15% {
+        transform: translateX(-3px);
+    }
+
+    35% {
+        transform: translateX(3px);
+    }
+
+    55% {
+        transform: translateX(-2px);
+    }
+
+    75% {
+        transform: translateX(2px);
+    }
+
+    90% {
+        transform: translateX(-1px);
+    }
+}
+
+// Marquee for the track title while playing
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+// ─── Component ───────────────────────────────────────────────────────────────
+
+.music-console-hud {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 10px;
+    gap: 0;
+
+    // Dark translucent panel matching the Stellaris aesthetic
+    background: linear-gradient(135deg,
+            rgba(60, 60, 63, 0.92) 0%,
+            rgba(38, 38, 41, 0.92) 100%);
+    backdrop-filter: blur(12px);
+
+    // Angled top-left notch — the signature Paradox UI clip
+    clip-path: polygon(12px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 12px);
+
+    border: 1px solid rgba(59, 178, 191, 0.5);
+    box-shadow: 0 0 10px rgba(59, 178, 191, 0.3);
+
+    position: relative;
+    overflow: hidden;
+    min-width: 300px;
+    user-select: none;
+
+    // ── State: power-pulse
+    &.pulse {
+        animation: pulse-glow 0.6s ease-out;
+    }
+
+    // ── State: shake on add
+    &.shake {
+        animation: shake 0.4s ease-in-out;
+    }
+
+    // ── Scanline overlay (purely decorative)
+    .scanlines {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 2px,
+                rgba(59, 178, 191, 0.04) 3px);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    // ── Ultra-thin teal progress bar at bottom edge
+    .progress-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: #3bb2bf;
+        box-shadow: 0 0 8px #3bb2bf;
+        transition: width 0.3s linear;
+        z-index: 3;
+    }
+
+    // ── "+ 新增" square micro-button
+    .btn-add {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin-right: 10px;
+        border: 1px solid rgba(59, 178, 191, 0.4) !important;
+        box-shadow: 0 0 4px rgba(59, 178, 191, 0.15);
+        z-index: 1;
+        border-radius: 2px;
+
+        .material-icons {
+            font-size: 14px;
+        }
+
+        &:hover {
+            border-color: #3bb2bf !important;
+            box-shadow: 0 0 8px rgba(59, 178, 191, 0.55);
+        }
+    }
+
+    // ── Track title area (fills remaining width)
+    .track-region {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+    }
+
+    .track-title {
+        white-space: nowrap;
+        font-size: 10px;
+        font-family: 'Courier New', Courier, monospace;
+        color: rgba(59, 178, 191, 0.85);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        width: 100%;
+        overflow: hidden;
+
+        // Marquee rolls the inner <span> while playing
+        &.marquee span {
+            display: inline-block;
+            animation: marquee 9s linear infinite;
+        }
+
+        &.no-track {
+            color: rgba(150, 150, 155, 0.45);
+            letter-spacing: 0.18em;
+        }
+    }
+
+    // ── Playback controls cluster
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        z-index: 1;
+        margin-left: 8px;
+    }
+
+    // ── Shared button base
+    .btn-hud {
+        background: transparent;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        padding: 4px 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s ease, filter 0.2s ease;
+        border-radius: 2px;
+
+        .material-icons {
+            font-size: 16px;
+        }
+
+        // Hover: icon blooms into glowing teal
+        &:hover {
+            color: #3bb2bf;
+            filter: drop-shadow(0 0 4px #3bb2bf);
+        }
+
+        // Play/pause carries a subtle teal tint at rest
+        &.btn-play {
+            color: rgba(59, 178, 191, 0.6);
+
+            &:hover {
+                color: #3bb2bf;
+            }
+        }
+    }
+}

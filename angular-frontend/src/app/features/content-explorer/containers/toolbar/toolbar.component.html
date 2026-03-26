@@ -1,0 +1,99 @@
+@let config = (provider.toolbarConfig$ | async);
+@let isExpanded = stateService.isExpanded$ | async;
+
+@if (config) {
+<!-- <div class="flex items-center gap-4">
+    <button (click)="comicListService.toggleDeleteMode()"
+        [class]="deleteMode ? 'bg-red-500 text-white shadow-[0_0_25px_rgba(239,68,68,0.4)] border-transparent' : 'bg-white/5 text-gray-400 border-white/10'"
+        class="flex items-center gap-3 px-5 py-2.5 border rounded-xl transition-all active:scale-95 group">
+        <span class="material-icons text-lg group-hover:shake">{{ deleteMode ? 'check_circle' :'delete' }}</span>
+        <span class="text-sm font-semibold">{{ deleteMode ? '完成編輯' : '刪除模式' }}</span>
+    </button>
+
+    <div class="flex">
+        <p-button icon="pi pi-minus" (click)="provider.decreaseCols();" [disabled]="config.isGridColLowerLimit"
+            [style.opacity]="config.isGridColLowerLimit ? '0.2' : '1'" />
+
+        <div class="px-3 flex flex-col items-center">
+            <span class="text-[9px] font-black text-cyan-400 uppercase tracking-tighter">Density</span>
+            <span class="text-[12px] font-mono font-bold ">{{ config.gridCols }}</span>
+        </div>
+
+        <p-button icon="pi pi-plus" (click)="provider.incrementCols();" [disabled]="config.isGridColUpperLimit"
+            [style.opacity]="config.isGridColUpperLimit ? '0.2' : '1'" />
+    </div>
+
+
+    <p-inputgroup>
+        <p-select optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+
+
+        <p-inputgroup-addon>
+            <p-button (click)="provider.toggleSort()" class="flex items-center relative"
+                icon="pi {{ config.sortIcon }}" />
+        </p-inputgroup-addon>
+    </p-inputgroup>
+
+    <p class="ml-3 flex items-baseline gap-1 font-medium color-[#1f1f1f]">
+        <input pInputText type="text" placeholder="{{ config.pageOffset + 1 }}" />
+        <span>/</span>
+        <span>{{ config.totalPages }}</span>
+    </p>
+
+    <div class="flex items-center gap-2">
+        <input pInputText type="text" placeholder="搜尋漫畫關鍵字..." />
+        <button>搜尋</button>
+        <button>清除</button>
+    </div>
+
+</div> -->
+
+<p-toolbar class="w-full rounded-3xl shadow-2xl flex flex-wrap">
+    <ng-template pTemplate="start">
+        <app-pagination-control></app-pagination-control>
+    </ng-template>
+
+    <ng-template pTemplate="center">
+        <div class="relative w-[400px] group">
+            <i
+                class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors z-10"></i>
+            <input pInputText type="text" [ngModel]="searchValue" placeholder="快速搜尋..."
+                (ngModelChange)="onSearchChange($event)"
+                class="w-full !bg-black/40 !border-white/10 !rounded-2xl !py-2.5 !pl-11 !pr-4 !text-sm focus:!border-cyan-500/50" />
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        <div class="flex items-center gap-2">
+
+            <p-inputgroup>
+                <p-select optionLabel="name" [options]="sortOptions" [ngModel]="sortOptions[selectedSortIndex]"
+                    class="w-full md:w-56" (onChange)="onSortChange($event)"
+                    [pt]="{ dropdown: { class: '!hidden' } }"></p-select>
+
+                <p-inputgroup-addon>
+                    <p-button (click)="toggleSort()" class="flex items-center relative" icon="pi {{ sortIcon }}" />
+                </p-inputgroup-addon>
+            </p-inputgroup>
+
+            <p-button icon="pi pi-th-large" [outlined]="true"
+                styleClass="w-11 h-11 !rounded-2xl border-white/5 !text-cyan-400 hover:bg-white/5"></p-button>
+
+            <!-- Hidden folder input — webkitdirectory enables whole-folder selection -->
+            <input #folderInput type="file" webkitdirectory multiple class="hidden" (change)="onFolderSelected($event)">
+            <p-button icon="pi pi-folder-open" [outlined]="true" (click)="folderInput.click()" pTooltip="上傳資料夾"
+                tooltipPosition="bottom"
+                styleClass="w-11 h-11 !rounded-2xl border-white/5 !text-cyan-400 hover:bg-white/5"></p-button>
+
+            <p-button icon="pi pi-sliders-h" (click)="stateService.togglePanel()"
+                [styleClass]="isExpanded ? 'w-11 h-11 !rounded-2xl !bg-cyan-500/20 !text-cyan-400' : 'w-11 h-11 !rounded-2xl !bg-cyan-500/10 !text-cyan-400 hover:bg-cyan-500/20'"></p-button>
+        </div>
+    </ng-template>
+
+    @if (isExpanded) {
+    <div class="transition-all order-last duration-300 w-full border  border-cyan-500">
+        <app-advanced-panel></app-advanced-panel>
+    </div>
+    }
+</p-toolbar>
+}
