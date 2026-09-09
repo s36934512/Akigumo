@@ -1,0 +1,11 @@
+<div [class]="containerClasses()">
+	<aside [class]="sidebarClasses()" [ngStyle]="sidebarStyles()">
+		<ng-content></ng-content>
+	</aside>
+
+	<div [class]="expandedClasses()" [ngStyle]="expandedStyles()">
+		<ng-content select="[expanded]"></ng-content>
+	</div>
+
+	<shared-sidebar-control-panel></shared-sidebar-control-panel>
+</div>

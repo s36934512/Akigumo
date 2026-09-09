@@ -1,0 +1,35 @@
+<button
+	type="button"
+	class="w-11 h-11 flex items-center justify-center border cursor-pointer"
+	(click)="onZoomIn.emit()"
+	title="放大"
+>
+	<span class="material-symbols-outlined"> zoom_in </span>
+</button>
+
+<button
+	type="button"
+	class="w-11 h-11 flex items-center justify-center border cursor-pointer"
+	(click)="onZoomOut.emit()"
+	title="縮小"
+>
+	<span class="material-symbols-outlined"> zoom_out </span>
+</button>
+
+<button
+	type="button"
+	class="w-11 h-11 flex items-center justify-center border cursor-pointer"
+	(click)="onFit.emit()"
+	title="適應視窗"
+>
+	<span class="material-symbols-outlined"> fit_screen </span>
+</button>
+
+<button
+	type="button"
+	class="w-11 h-11 flex items-center justify-center border cursor-pointer"
+	(click)="onReset.emit()"
+	title="重設首頁"
+>
+	<span class="material-symbols-outlined"> home </span>
+</button>

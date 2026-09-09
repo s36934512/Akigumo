@@ -1,0 +1,38 @@
+<section class="tag-filter-card">
+	<div class="tag-filter-header">
+		<div>
+			<p class="label">Tag navigation</p>
+			<p class="description">Use tags to filter the archive list quickly.</p>
+		</div>
+		<button
+			class="clear-button"
+			type="button"
+			(click)="onClear()"
+			[disabled]="selectedTags.length === 0"
+		>
+			Clear all
+		</button>
+	</div>
+
+	<div class="tag-filter-search">
+		<input
+			type="text"
+			[(ngModel)]="filterKeyword"
+			class="tag-search"
+			placeholder="Search tags..."
+		>
+	</div>
+
+	<div class="tag-group">
+		<button
+			*ngFor="let item of filteredTags"
+			type="button"
+			class="tag-chip"
+			[class.selected]="selectedTags.includes(item.tag)"
+			(click)="onToggle(item.tag)"
+		>
+			<span>{{ item.tag }}</span>
+			<small>{{ item.count }}</small>
+		</button>
+	</div>
+</section>

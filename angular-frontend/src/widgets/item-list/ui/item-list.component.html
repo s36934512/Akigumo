@@ -1,0 +1,82 @@
+<!-- biome-ignore format: preserve angular let template -->
+@let columnCount = listControlsStore.columnCount();
+@let hoveredIndex = itemListStore.hoveredIndex$ | async;
+@let image = itemListStore.dynamicArchives$ | async;
+
+<div class="w-full flex flex-col" [style.backgroundColor]="'#FDFDFD'">
+	<feature-list-controls class="shrink-0"></feature-list-controls>
+
+	<!-- <div class="p-4 bg-[#f8fafc] border-b border-[#e5e7eb]">
+		<feature-tag-filter
+			[class]="'mb-4'"
+			[selectedTags]="listControlsStore.currentQueryParams().selectedTags"
+			(toggleTag)="listControlsStore.toggleTag($event)"
+			(clearTags)="listControlsStore.clearTags()"
+		></feature-tag-filter>
+	</div> -->
+
+	<feature-upload-by-drop class="w-full bg-[#f7f9fc]">
+		<div class="w-full overflow-hidden">
+			<!-- biome-ignore format: preserve angular let template -->
+			@let filteredEntries = itemListStore.filteredEntries();
+			@if (filteredEntries.length > 0){
+			<div
+				class="w-full grid gap-x-4 gap-y-8 overflow-hidden"
+				[style.grid-template-columns]="'repeat(' + columnCount + ', minmax(0, 1fr))'"
+			>
+				@for (entry of filteredEntries; track entry.id) {
+				<entity-archive-item-card
+					[entry]="entry"
+					[isHovered]="hoveredIndex === $index"
+					[sharedOverlayPanel]="previewTemplate"
+					[featureNavToDetail]="entry.id"
+					(cardMouseEnter)="itemListStore.setHovered($index)"
+					(cardMouseLeave)="itemListStore.setHovered(null)"
+					(click)="archiveSelectionStore.selection.toggleSelect(entry.id)"
+				> </entity-archive-item-card>
+				}
+			</div>
+			} @else {
+			<div
+				class="flex h-[400px] flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-[#e5e7eb] bg-white/50 text-gray-500"
+			>
+				<span class="text-2xl font-semibold">No items found</span>
+				<span class="text-sm"
+					>Try adjusting your filters or adding new items.</span
+				>
+			</div>
+			}
+		</div>
+	</feature-upload-by-drop>
+</div>
+
+<ng-template #previewTemplate>
+	@if (image) {
+	<div
+		class="flex flex-col bg-white border border-gray-300"
+		[style.width.px]="image.width"
+		[featureNavToDetail]="image.id"
+	>
+		<div class="p-2 flex gap-2 content-baseline">
+			<!-- @if (store.length() > 0) {
+            <div class="flex items-center text-sm">
+                <span class="text-gray-400">{{ store.currentIndex() + 1 }}</span>
+                <span class="mx-2 text-gray-300">/</span>
+                <span class="text-blue-500 font-semibold hover:underline cursor-pointer">{{ store.length() }}</span>
+            </div>
+            } -->
+			<p class="text-gray-900 truncate">{{ image.name }}</p>
+		</div>
+		@if (image.url && image.width && image.height) {
+		<img
+			[src]="image.url"
+			[width]="image.width"
+			[height]="image.height"
+			priority
+			class="object-contain"
+			alt="preview"
+		>
+		}
+	</div>
+	}
+</ng-template>

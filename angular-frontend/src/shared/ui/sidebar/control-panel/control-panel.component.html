@@ -1,0 +1,34 @@
+<!-- biome-ignore format: preserve angular let template -->
+@let isCollapsed = store.collapsed();
+@let isPinned = store.pinned();
+
+<div [class]="controlPanelClasses()" [ngStyle]="store.controlPanelStyles()">
+	<button
+		type="button"
+		(click)="store.toggleCollapsed()"
+		class="w-8 h-8 text-slate-400 rounded-md cursor-pointer duration-300 ease-in-out flex items-center justify-center shrink-0 group/btn hover:bg-white/10 pointer-events-auto"
+		[ngStyle]="store.buttonStyles()"
+		[title]="isCollapsed ? '展開選單' : '收合選單'"
+	>
+		<span
+			class="material-symbols-outlined duration-300 group-hover/btn:scale-110"
+			[ngStyle]="isCollapsed ? style : null"
+		>
+			{{ isCollapsed ? 'dock_to_right' : 'dock_to_left' }}
+		</span>
+	</button>
+
+	<button
+		type="button"
+		(click)="store.togglePinned()"
+		class="w-8 h-8 text-slate-400 rounded-md cursor-pointer duration-300 ease-in-out flex items-center justify-center shrink-0 group/btn hover:bg-white/10 pointer-events-auto"
+		[ngStyle]="store.buttonStyles()"
+	>
+		<span
+			class="material-symbols-outlined duration-300 group-hover/btn:scale-110"
+			[title]="isPinned ? '取消釘選' : '釘選選單'"
+		>
+			{{ isPinned ? 'keep' : 'keep_off' }}
+		</span>
+	</button>
+</div>

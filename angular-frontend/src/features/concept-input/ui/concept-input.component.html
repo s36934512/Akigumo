@@ -1,0 +1,10 @@
+<ng-select
+	[items]="conceptEntryStore.nodes()"
+	[multiple]="multiple()"
+	[addTag]="addTempTag"
+	bindLabel="name"
+	bindValue="id"
+	[searchFn]="customSearchFn"
+	[formField]="formField()"
+	[hideSelected]="true"
+/>

@@ -1,0 +1,7 @@
+/**
+ * Graph aggregate identifier
+ *
+ * We keep aggregate identifiers stable because outbox routing and workflow
+ * event correlation depend on this exact value across deployments.
+ */
+export const GRAPH_AGGREGATE = "GRAPH" as const;

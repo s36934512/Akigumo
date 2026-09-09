@@ -1,0 +1,12 @@
+<feature-concept-input [formField]="infoForm.keyId" />
+@if (infoForm.keyId().touched() && infoForm.keyId().invalid()) {
+<p class="error-msg">此欄位為必填項目！</p>
+}
+
+<div class="w-px h-6 bg-outline-variant mx-1"></div>
+<feature-concept-input [formField]="infoForm.valueId" [multiple]="true" />
+@if (infoForm.valueId().touched() && infoForm.valueId().invalid()) {
+<p class="error-msg">此欄位為必填項目！</p>
+}
+
+<button type="button" (click)="onClose.emit()">移除</button>

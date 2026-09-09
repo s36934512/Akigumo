@@ -1,0 +1,16 @@
+<div
+	appDropzone
+	class="relative h-full"
+	(draggingChange)="onDraggingChange($event)"
+	(filesDropped)="onFilesDropped($event)"
+>
+	<ng-content />
+	@if (isDragging()) {
+	<div
+		class="absolute inset-0 z-40 flex flex-col items-center justify-center rounded-[20px] border-2 border-dashed border-white/75 bg-[rgba(37,99,235,0.9)] pointer-events-none text-center text-white"
+	>
+		<h2 class="text-xl font-bold">Drop files to upload</h2>
+		<p class="text-sm opacity-90">Files will be queued automatically.</p>
+	</div>
+	}
+</div>

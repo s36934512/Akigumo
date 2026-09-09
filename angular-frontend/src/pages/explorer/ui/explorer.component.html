@@ -1,0 +1,29 @@
+<div
+	class="w-screen h-screen flex"
+	[style.--left-sidebar-w]="leftWidth()"
+	[style.--left-control-panel-w]="leftControlPanelWidth()"
+	[style.--right-sidebar-w]="rightWidth()"
+	[style.--right-control-panel-w]="rightControlPanelWidth()"
+>
+	<page-explorer-left-sidebar
+		class="h-full"
+		[class.z-100]="leftRequireOverlay()"
+	></page-explorer-left-sidebar>
+
+	<div
+		class="flex-1 pl-[var(--left-sidebar-w)] pr-[var(--right-sidebar-w)] flex flex-col"
+	>
+		<widget-header class="w-full"></widget-header>
+		<widget-item-list
+			class="flex-1 pl-[var(--left-control-panel-w)] pr-[var(--right-control-panel-w)]"
+		></widget-item-list>
+	</div>
+
+	<page-explorer-right-sidebar
+		class="h-screen z-20"
+		[class.z-100]="rightRequireOverlay()"
+	></page-explorer-right-sidebar>
+
+	<shared-overlay [(isOpen)]="isOpen"></shared-overlay>
+</div>
+<p-confirmdialog />

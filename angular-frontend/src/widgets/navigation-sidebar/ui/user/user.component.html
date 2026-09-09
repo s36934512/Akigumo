@@ -1,0 +1,26 @@
+@let isCollapsed = store.collapsed();
+<div
+	class="w-full h-full p-2 flex items-center gap-3 rounded-lg hover:bg-white/5 cursor-pointer transition-all"
+	[class.justify-center]="isCollapsed"
+	[class.justify-start]="!isCollapsed"
+>
+	<div
+		class="w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0"
+		[style.borderColor]="theme.primary"
+	>
+		<span class="text-[10px] font-black" [style.color]="theme.primary"
+			>秋雲</span
+		>
+	</div>
+	@if (!isCollapsed) {
+	<p
+		class="text-[11px] font-bold m-0 truncate text-white"
+		[class.w-0]="isCollapsed"
+		[class.opacity-0]="isCollapsed"
+		[class.w-auto]="!isCollapsed"
+		[class.opacity-100]="!isCollapsed"
+	>
+		秋雲
+	</p>
+	}
+</div>

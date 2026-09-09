@@ -1,0 +1,11 @@
+<shared-sidebar sidebarStoreDirective leftSlot #leftSlotRef class="h-full">
+	<widget-navigation-sidebar />
+</shared-sidebar>
+
+<div class="w-full h-full flex flex-col">
+	<widget-header></widget-header>
+	<widget-archive-detail
+		[id]="id()"
+		class="flex-1 w-full"
+	></widget-archive-detail>
+</div>

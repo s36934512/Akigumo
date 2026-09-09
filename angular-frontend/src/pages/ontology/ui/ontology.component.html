@@ -1,0 +1,15 @@
+<div
+	class="w-screen h-screen flex flex-col"
+	[style.--sidebar-w]="width()"
+	[style.--control-panel-w]="controlPanelWidth()"
+	[style.--total-w]="totalWidth()"
+>
+	<widget-header class="w-full pr-[var(--sidebar-w)]"></widget-header>
+
+	<div class="w-full flex-1 relative flex">
+		<widget-concept-explorer class="flex-1"></widget-concept-explorer>
+
+		<page-ontology-right-sidebar class="z-20"></page-ontology-right-sidebar>
+	</div>
+</div>
+<p-confirmdialog />

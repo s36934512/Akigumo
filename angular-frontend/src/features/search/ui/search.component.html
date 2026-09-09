@@ -1,0 +1,25 @@
+<!-- 引入官方基礎樣式 -->
+<link rel="stylesheet" href="https://jsdelivr.net">
+
+<div class="search-container" style="padding: 20px;">
+	<!-- 供 InstantSearch 綁定的實體輸入框 -->
+	<div id="searchbox"></div>
+
+	<!-- 用來給 widget 初始化用的隱藏節點 (因為要自己寫渲染邏輯) -->
+	<div id="hits-placeholder" style="display: none;"></div>
+
+	<!-- v22 最新內建控制流程渲染：直接讀取 Signal 狀態 -->
+	<div class="results-list" style="margin-top: 20px;">
+		@for (hit of searchResults(); track hit.id) {
+		<div
+			class="search-item"
+			style="margin: 10px 0; padding: 10px; border-bottom: 1px solid #eee;"
+		>
+			<h3>{{ getDisplayName(hit) }}</h3>
+			<p style="color: #666; font-size: 0.85em;">ID: {{ hit.id }}</p>
+		</div>
+		} @empty {
+		<p style="color: #999; text-align: center;">找不到符合的物件名稱</p>
+		}
+	</div>
+</div>

@@ -1,0 +1,14 @@
+redis:
+  host: "redis"
+  port: 6379
+  db: 0
+mq:
+  graph_stream_name: "akigumo:graph"
+  graph_group_name: "g:akigumo:graph"
+
+  workflow_stream_name: "akigumo:workflow"
+  workflow_group_name: "g:akigumo:workflow"
+
+  batch_size: 10
+  min_idle_time: 30000
+  trim_interval_seconds: 600

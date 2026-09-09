@@ -1,0 +1,45 @@
+<div
+	class="w-full h-full flex flex-col mx-auto mt-5 max-w-7xl space-y-8 bg-white/5"
+>
+	<!-- 仿 Angular Material 外觀的容器 -->
+	<div class="relative flex flex-col w-full group">
+		<!-- ✅ 1. 建立正確的 Label 關聯 -->
+		<label
+			for="tagify-input"
+			class="absolute left-3 -top-2.5 bg-white px-1 text-xs font-medium text-gray-500 transition-all group-focus-within:text-primary-600"
+		>
+			搜尋概念標籤
+		</label>
+
+		<ng-select
+			[items]="conceptEntryStore.nodes()"
+			[multiple]="true"
+			[addTag]="addTempTag"
+			bindLabel="name"
+			bindValue="id"
+			[searchFn]="customSearchFn"
+			[formField]="searchForm.selectedId"
+			[hideSelected]="true"
+		/>
+	</div>
+
+	<div>
+		<button
+			type="button"
+			mat-raised-button
+			color="primary"
+			(click)="onSubmit()"
+		>
+			儲存
+		</button>
+
+		<button
+			type="button"
+			mat-raised-button
+			color="primary"
+			(click)="onCancel()"
+		>
+			取消
+		</button>
+	</div>
+</div>

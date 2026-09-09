@@ -1,0 +1,62 @@
+<div
+	class="w-full h-full flex flex-col overflow-y-auto bg-[#f7f9fc] p-6 md:p-10"
+>
+	@if (entry(); as item) {
+	<!--	<div class="flex-1">
+		@for (concept of (concepts() ?? []); track concept.id) {
+		<p class="text-xs uppercase tracking-[0.28em] text-slate-400">
+			{{ concept.id }}
+		</p>
+		<p class="mt-2 text-sm text-slate-700">
+			{{ concept.name }}
+		</p>
+		}
+		<p class="text-xs uppercase tracking-[0.28em] text-slate-400">
+			Overview
+		</p>
+		<h1 class="mt-2 text-3xl font-semibold text-slate-900">
+			{{ item.name }}
+		</h1>
+		<p class="text-sm text-slate-500">
+			Type:
+			<span class="font-medium text-slate-700">{{ item.type }}</span>
+		</p>
+		<p class="text-xs uppercase tracking-[0.22em] text-slate-400">
+			Created
+		</p>
+		<p class="mt-2 text-sm text-slate-700">
+			{{ item.createdAt | date:'medium' }}
+		</p>
+		<p class="text-xs uppercase tracking-[0.22em] text-slate-400">
+			Updated
+		</p>
+		<p class="mt-2 text-sm text-slate-700">
+			{{ item.updatedAt | date:'medium' }}
+		</p>
+		
+	</div> -->
+	@if (coverUrl) {
+	<div class="relative w-full h-full">
+		<widget-archive-detail-controller
+			class="absolute w-full z-2 top-0 opacity-0 hover:opacity-50"
+		></widget-archive-detail-controller>
+		<div
+			class="w-full h-[700px] relative border border-slate-200 bg-slate-950 flex justify-center item-center"
+		>
+			<div class="f-panzoom w-full h-full">
+				<img
+					class="f-panzoom__content"
+					[src]="coverUrl"
+					alt="Cover preview"
+				>
+			</div>
+
+			<div class="minimap-container" #minimapContainer>
+				<img [src]="coverUrl" class="minimap-bg" alt="小圖">
+				<!-- 追蹤放大位置的定位方框 -->
+				<div class="minimap-box" #minimapBox></div>
+			</div>
+		</div>
+	</div>
+	} }
+</div>

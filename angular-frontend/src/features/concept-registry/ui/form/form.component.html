@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<formly-form
+		[form]="form"
+		[fields]="fields"
+		[model]="model()"
+	></formly-form>
+	<button type="submit" class="btn btn-default">Submit</button>
+</form>
+@for (concept of (existConcept() ?? []); track concept.id) {
+<entity-concept-tag [entry]="concept"></entity-concept-tag>
+}

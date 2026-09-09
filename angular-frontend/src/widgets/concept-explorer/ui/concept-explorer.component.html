@@ -1,0 +1,13 @@
+<widget-navigation-sidebar-tool
+	class="absolute z-10 top-5 left-10"
+></widget-navigation-sidebar-tool>
+
+<div #cyCanvas class="w-full h-full"></div>
+
+<widget-concept-explorer-zoom-button
+	class="absolute flex flex-col rounded z-10 top-10 right-10 bg-[#ffffff]/80"
+	(onZoomIn)="zoomIn()"
+	(onZoomOut)="zoomOut()"
+	(onFit)="fitGraph()"
+	(onReset)="resetGraph()"
+></widget-concept-explorer-zoom-button>

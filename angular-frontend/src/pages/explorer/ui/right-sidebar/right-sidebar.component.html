@@ -1,0 +1,14 @@
+<shared-sidebar class="bg-[#f7f9fc]">
+	<div>
+		<button type="button" (click)="edit = !edit">編輯</button>
+		<button type="button" (click)="onDelete($event)">刪除</button>
+		<widget-info-panel />
+		@if (edit) {
+		<widget-info-add />
+		<button type="button" (click)="onEditSave()">儲存</button>
+		<button type="button" (click)="edit = !edit">取消</button>
+		}
+	</div>
+
+	<feature-concept-editor expanded></feature-concept-editor>
+</shared-sidebar>

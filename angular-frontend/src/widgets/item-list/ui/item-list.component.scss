@@ -1,0 +1,19 @@
+/* Main drag animation behavior is driven by Tailwind and cdk-drag-drop */
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+    transition: none !important;
+    pointer-events: none !important;
+    box-sizing: border-box;
+    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.5));
+}
+
+.cdk-drag-animating {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}

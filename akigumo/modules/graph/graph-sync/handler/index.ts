@@ -1,0 +1,9 @@
+import "./archive-concept.js";
+import "./archive-delete.js";
+import "./archive-transcode.js";
+import "./archive-uncompress.js";
+import "./concept-attacher.js";
+import "./concept-delete.js";
+import "./concept-registry.js";
+import "./file-registry.js";
+import "./item-contain.js";

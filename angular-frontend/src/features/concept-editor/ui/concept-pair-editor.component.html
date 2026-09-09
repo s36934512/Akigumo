@@ -1,0 +1,19 @@
+<div
+	class="w-full h-full flex flex-col mx-auto mt-5 max-w-7xl space-y-8 bg-white/5"
+>
+	<!-- 仿 Angular Material 外觀的容器 -->
+	<div class="relative flex flex-col w-full group">
+		<ng-select
+			appConceptTagify
+			[items]="conceptEntryStore.nodes()"
+			[addTag]="addTempTag"
+			bindLabel="name"
+			bindValue="id"
+			[searchFn]="customSearchFn"
+			[formField]="searchForm.selectedIdA"
+			[hideSelected]="true"
+		/>
+
+		<feature-concept-input [formField]="searchForm.selectedIdB" />
+	</div>
+</div>

@@ -1,0 +1,43 @@
+<p-toolbar class="w-full rounded-3xl shadow-2xl flex flex-wrap">
+    <ng-template pTemplate="center">
+        <div class="relative w-[400px] group">
+            <i
+                class="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors z-10"></i>
+            <input pInputText type="text" [ngModel]="searchValue" placeholder="快速搜尋..."
+                (ngModelChange)="onSearchChange($event)"
+                class="w-full !bg-black/40 !border-white/10 !rounded-2xl !py-2.5 !pl-11 !pr-4 !text-sm focus:!border-cyan-500/50" />
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        <div class="flex items-center gap-2">
+
+            <p-inputgroup>
+                <p-select optionLabel="name" [options]="sortOptions" [ngModel]="sortOptions[selectedSortIndex]"
+                    class="w-full md:w-56" (onChange)="onSortChange($event)"
+                    [pt]="{ dropdown: { class: '!hidden' } }"></p-select>
+
+                <p-inputgroup-addon>
+                    <p-button class="flex items-center relative" icon="pi {{ sortIcon }}" />
+                </p-inputgroup-addon>
+            </p-inputgroup>
+
+            <p-button icon="pi pi-th-large" [outlined]="true"
+                styleClass="w-11 h-11 !rounded-2xl border-white/5 !text-cyan-400 hover:bg-white/5"></p-button>
+
+            <!-- Hidden folder input — webkitdirectory enables whole-folder selection -->
+            <input #folderInput type="file" webkitdirectory multiple class="hidden" (change)="onFolderSelected($event)">
+            <p-button icon="pi pi-folder-open" [outlined]="true" (click)="folderInput.click()" pTooltip="上傳資料夾"
+                tooltipPosition="bottom"
+                styleClass="w-11 h-11 !rounded-2xl border-white/5 !text-cyan-400 hover:bg-white/5"></p-button>
+
+            <p-button icon="pi pi-sliders-h" (click)="store.toggleExpanded()"
+                [styleClass]="store.isExpanded() ? 'w-11 h-11 !rounded-2xl !bg-cyan-500/20 !text-cyan-400' : 'w-11 h-11 !rounded-2xl !bg-cyan-500/10 !text-cyan-400 hover:bg-cyan-500/20'"></p-button>
+        </div>
+    </ng-template>
+
+    @if (store.isExpanded()) {
+    <list-controls-advanced-panel
+        class="transition-all order-last duration-300 w-full border  border-cyan-500"></list-controls-advanced-panel>
+    }
+</p-toolbar>

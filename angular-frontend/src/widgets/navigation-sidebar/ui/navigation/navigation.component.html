@@ -1,0 +1,29 @@
+@let isCollapsed = store.collapsed();
+<div
+	class="flex flex-col h-full w-full gap-2 shrink-0 transition-all duration-300 ease-in-out"
+>
+	@for (item of menuItems; track item.label) {
+	<div
+		(click)="navByActiveItem(item)"
+		class="w-full flex items-center p-1 gap-4 rounded-lg cursor-pointer transition-all relative hover:scale-110 transition-transform"
+		[class.mt-auto]="item.position === 'bottom'"
+		[class.justify-center]="isCollapsed"
+		[class.justify-start]="!isCollapsed"
+		[style.backgroundColor]="activeItem()?.label === item.label ? theme.primary : 'transparent'"
+		[style.color]="activeItem()?.label === item.label ? theme.pureWhite : 'rgba(255,255,255,0.6)'"
+	>
+		<div class="w-8 h-8 rounded flex items-center justify-center">
+			<span class="material-symbols-outlined">{{ item.icon }}</span>
+		</div>
+		@if (!isCollapsed) {
+		<span
+			class="text-sm font-bold tracking-tight transition-all duration-300 ease-in-out overflow-hidden shrink-0 whitespace-nowrap block"
+			[class.w-0]="isCollapsed"
+			[class.opacity-0]="isCollapsed"
+			[class.w-auto]="!isCollapsed"
+			[class.opacity-100]="!isCollapsed"
+			>{{ item.label }}</span
+		>}
+	</div>
+	}
+</div>

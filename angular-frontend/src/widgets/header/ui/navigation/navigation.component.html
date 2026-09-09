@@ -1,0 +1,14 @@
+<div class="flex h-full w-full gap-2 shrink-0">
+	@for (item of menuItems; track item.label) {
+	<div
+		(click)="navByActiveItem(item)"
+		class="w-full cursor-pointer transition-all relative hover:scale-110 transition-transform"
+		[style.color]="activeItem()?.label === item.label ? theme.coral : theme.darkGray"
+	>
+		<span
+			class="text-sm font-bold tracking-tight shrink-0 whitespace-nowrap block"
+			>{{ item.label }}</span
+		>
+	</div>
+	}
+</div>

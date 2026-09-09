@@ -1,0 +1,17 @@
+<!-- 隱藏的檔案選取器 -->
+<input
+	type="file"
+	#fileInput
+	style="display: none;"
+	(change)="onFileSelected($event)"
+>
+<div>
+	<span>檔案名稱: {{ task().fileName }}</span>
+	<button
+		type="button"
+		(click)="triggerFileInput()"
+		[disabled]="task().status === 'uploading'"
+	>
+		{{ task().status === 'paused' ? '點擊繼續上傳' : '上傳中...' }}
+	</button>
+</div>

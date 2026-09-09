@@ -1,0 +1,19 @@
+<div
+	class="flex flex-col h-full relative transition-all duration-300 ease-in-out"
+	[style.color]="theme.pureWhite"
+	[style.backgroundColor]="theme.darkGray"
+>
+	<widget-navigation-sidebar-logo
+		class="block w-full h-16 p-2 border-b"
+		[style.borderBottomColor]="'rgba(255,255,255,0.05)'"
+	></widget-navigation-sidebar-logo>
+
+	<widget-navigation-sidebar-navigation
+		class="block w-full flex-1 p-2 overflow-y-auto overflow-x-hidden"
+	></widget-navigation-sidebar-navigation>
+
+	<widget-navigation-sidebar-user
+		class="block w-full h-16 p-2 flex-shrink-0 border-t"
+		[style.borderTopColor]="'rgba(255,255,255,0.05)'"
+	></widget-navigation-sidebar-user>
+</div>

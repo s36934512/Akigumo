@@ -1,0 +1,38 @@
+<!-- @let activeItem = sessionStore.activeItem(); -->
+
+<header
+	class="w-full h-16 flex items-center justify-between px-8 border-b shrink-0 bg-white/80 backdrop-blur-md"
+	[style.borderBottomColor]="theme.lightGray"
+>
+	<widget-navigation-sidebar-logo></widget-navigation-sidebar-logo>
+
+	<widget-navigation-sidebar-navigation
+	></widget-navigation-sidebar-navigation>
+
+	<div class="flex items-center gap-6">
+		<!-- Global upload indicator -->
+		<button
+			type="button"
+			class="relative p-2 rounded hover:bg-slate-100"
+			(click)="gotoUploads()"
+			[title]="uploadCount > 0 ? ('有 ' + uploadCount + ' 個檔案正在背景上傳，點此查看詳情') : '沒有背景上傳'"
+		>
+			<span class="material-icons">cloud_upload</span>
+			@if (uploadCount > 0) {
+			<span
+				class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full text-xs px-1"
+			>
+				{{ uploadCount }}
+			</span>
+			}
+		</button>
+		<!-- Paradox-style music HUD, anchored to top-right -->
+		<app-music-player></app-music-player>
+
+		<!-- <button
+            class="bg-gray-800 text-white border-none rounded px-4 py-2 text-[10px] font-bold uppercase tracking-widest cursor-pointer hover:bg-black transition-all shadow-sm active:scale-95 flex items-center gap-2">
+            <span class="material-icons text-xs">add</span>
+            新增數據卷
+        </button> -->
+	</div>
+</header>

@@ -1,0 +1,40 @@
+<div class="h-full flex flex-col gap-2 bg-white justify-between">
+	@if (entry(); as item) {
+	<div class="flex flex-col">
+		<p class="text-sm uppercase tracking-[0.28em] text-slate-500">
+			詳細資料
+		</p>
+
+		<h1 class="mt-2 text-3xl font-semibold text-slate-900">
+			檔名： {{ item.name }}
+		</h1>
+		<h1 class="mt-2 text-3xl font-semibold text-slate-900">
+			類型： {{ item.type }}
+		</h1>
+
+		<div class="flex gap-2 items-center">
+			<p class="mt-2 text-sm text-slate-700">資訊</p>
+			<button type="button" (click)="onExpanded()">
+				<span class="material-symbols-outlined"> add_circle </span>
+			</button>
+		</div>
+
+		<div class="flex gap-2 items-center">
+			<p class="mt-2 text-sm text-slate-700">標籤</p>
+			<button type="button" (click)="onExpanded()">
+				<span class="material-symbols-outlined"> add_circle </span>
+			</button>
+		</div>
+		@for (entry of (concepts() ?? []); track entry.concept.id) {
+		<p class="mt-2 text-sm text-slate-700">
+			<span>{{ entry.type }}</span>
+			<entity-concept-tag [entry]="entry.concept"></entity-concept-tag>
+		</p>
+		}
+	</div>
+	} @else {
+	<span class="mt-2 font-semibold text-slate-900">
+		請選擇一個檔案查看詳情
+	</span>
+	}
+</div>

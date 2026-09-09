@@ -1,0 +1,55 @@
+<div
+	class=" flex items-center gap-1 bg-surface-container-lowest/90 backdrop-blur-sm p-1.5 rounded-full border border-outline-variant shadow-lg"
+>
+	<!-- 新增節點按鈕 -->
+	<button
+		type="button"
+		(click)="onAddNode()"
+		class="flex items-center gap-2 text-sm font-medium text-on-surface px-3 py-1.5 rounded-full hover:bg-primary-container hover:text-on-primary-container transition-all"
+	>
+		<span class="material-symbols-outlined text-[20px]">add_circle</span>
+		<span>Add Node</span>
+	</button>
+
+	<!-- 新增連線按鈕 -->
+	<button
+		type="button"
+		(click)="onAddEdge()"
+		class="flex items-center gap-2 text-sm font-medium text-on-surface px-3 py-1.5 rounded-full hover:bg-primary-container hover:text-on-primary-container transition-all"
+	>
+		<span class="material-symbols-outlined text-[20px]">timeline</span>
+		<span>Add Edge</span>
+	</button>
+	<!-- 刪除按鈕 -->
+	@if (openDeleteMode()) {
+	<div class="w-px h-6 bg-outline-variant mx-1"></div>
+
+	<button
+		type="button"
+		(click)="onDelete($event)"
+		class="flex items-center gap-2 text-sm font-medium text-error px-3 py-1.5 rounded-full hover:bg-error-container transition-all"
+	>
+		<span class="material-symbols-outlined text-[20px]">delete</span>
+		<span>Delete</span>
+	</button>
+	}
+
+	<!-- <div class="w-px h-6 bg-outline-variant mx-1"></div> -->
+
+	<!-- 佈局篩選器 -->
+	<!-- <div class="flex items-center gap-1 px-3 py-1.5">
+		<span
+			class="material-symbols-outlined text-[20px] text-on-surface-variant"
+			>filter_alt</span
+		>
+		<select
+			[value]="selectedLayout"
+			(change)="onLayoutChange($event)"
+			class="bg-transparent border-none text-sm font-semibold text-primary p-0 focus:ring-0 cursor-pointer"
+		>
+			<option value="Force Directed">Force Directed</option>
+			<option value="Hierarchical">Hierarchical</option>
+			<option value="Circular">Circular</option>
+		</select>
+	</div> -->
+</div>

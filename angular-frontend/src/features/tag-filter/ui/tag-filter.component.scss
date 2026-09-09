@@ -1,0 +1,91 @@
+:host {
+    display: block;
+}
+
+.tag-filter-card {
+    background: #ffffff;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.tag-filter-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #475569;
+}
+
+.description {
+    margin-top: 0.25rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.clear-button {
+    font-size: 0.75rem;
+    color: #0f172a;
+    background: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+}
+
+.tag-filter-search {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.tag-search {
+    width: 100%;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    color: #0f172a;
+    background: #f8fafc;
+}
+
+.tag-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 0.75rem;
+}
+
+.tag-chip {
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 9999px;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    color: #334155;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.87rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tag-chip:hover {
+    background: #e2e8f0;
+}
+
+.tag-chip.selected {
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #1d4ed8;
+}
+
+.tag-chip.selected:hover {
+    background: #1e293b;
+}
